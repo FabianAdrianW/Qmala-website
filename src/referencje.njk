@@ -1,0 +1,40 @@
+---
+layout: base.njk
+permalink: referencje.html
+nav: referencje
+title: Referencje – Qmala
+description: Listy referencyjne dla Zakładu Elektro-Instalacyjnego Wojciech Kumala od wykonawców i inwestorów z Wrocławia.
+listy:
+  - { plik: Referencje8, firma: Zgromadzenie Córek Maryi Wspomożycielki, rok: "2014", zakres: "Roboty elektryczne i teletechniczne w zabytkowym budynku klasztornym przy ul. św. Jadwigi 11 we Wrocławiu.", cytat: "wykonany rzetelnie, z dużą starannością" }
+  - { plik: Referencje7, firma: ANPA Techniki Oświetleniowe, rok: "2012", zakres: "Roboty elektryczne i teletechniczne w Muzeum Narodowym we Wrocławiu.", cytat: "solidną, wiarygodną, w pełni przygotowaną do kompleksowego wykonania robót instalacyjnych" }
+  - { plik: Referencje5, firma: HARAS, rok: "2012", zakres: "Instalacje wewnętrzne, zasilanie i rozdzielnie w budynku Wydziału Elektroniki Mikrosystemów i Fotoniki Politechniki Wrocławskiej." }
+  - { plik: Referencje6, firma: KOMET P.P.H., rok: "2011", zakres: "SDH Astra: instalacje siły i oświetlenia, rozdzielnie główne, stacja transformatorowa, instalacja odgromowa." }
+  - { plik: Referencje3, firma: EL-PARTNER, rok: "2011–2012", zakres: "Instalacje elektryczne w budynku na potrzeby Powiatowego Urzędu Pracy." }
+  - { plik: Referencje1, firma: EURA Budownictwo, rok: "2011", zakres: "Zaplecze badawcze Politechniki Wrocławskiej i Zakład Opiekuńczo-Leczniczy dla Dzieci w Wierzbicach." }
+  - { plik: Referencje4, firma: EURA Budownictwo, rok: "2011", zakres: "Instalacje przeciwpożarowe w Zakładzie Opiekuńczo-Leczniczym dla Dzieci w Wierzbicach." }
+---
+<section class="page-head">
+  <div class="wrap">
+    <h1>Referencje</h1>
+    <p>Siedem listów od firm i instytucji, dla których pracowaliśmy. Kliknij list, żeby go przeczytać.</p>
+  </div>
+</section>
+
+<section class="page-body">
+  <div class="wrap">
+    <div class="refs">
+      {%- for l in listy %}
+      <article class="panel ref">
+        <button class="shot" type="button" data-set="ref" data-full="https://qmala.pl/images/{{ l.plik }}.jpg" data-cap="{{ l.firma }}, {{ l.rok }}" aria-label="Powiększ list: {{ l.firma }}, {{ l.rok }}"><img src="https://qmala.pl/images/{{ l.plik }}.jpg" alt="Skan listu referencyjnego: {{ l.firma }}, {{ l.rok }}" loading="lazy"></button>
+        <div class="panel-head"><span class="tag">{{ l.rok }}</span><h2>{{ l.firma }}</h2></div>
+        <p>{{ l.zakres }}</p>
+        {%- if l.cytat %}
+        <blockquote>„{{ l.cytat }}”</blockquote>
+        {%- endif %}
+      </article>
+      {%- endfor %}
+    </div>
+    <div class="more"><a class="btn btn-ghost" href="https://qmala.pl/images/Referencje2.doc">Kolejna referencja (plik Word)</a><a class="btn btn-ghost" href="realizacje.html">Zobacz zdjęcia z realizacji</a></div>
+{% set cta = "Twój obiekt może być następny. Zacznij od telefonu." %}{% include "cta.njk" %}
+  </div>
+</section>

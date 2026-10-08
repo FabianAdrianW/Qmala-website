@@ -1,18 +1,11 @@
 (function () {
   'use strict';
-  /* ← TU wpisz adresy profili. Puste = link do strony głównej serwisu. */
-  var SOCIAL = { facebook: '', instagram: '' };
-  ['facebook', 'instagram'].forEach(function (k) {
-    if (!SOCIAL[k]) return;
-    ['link-', 'foot-'].forEach(function (p) { var a = document.getElementById(p + k); if (a) a.href = SOCIAL[k]; });
-  });
-
   var calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-  /* navbar: zmienia się tylko cień, nigdy rozmiar */
+  /* navbar: zmienia się tylko linia, nigdy rozmiar */
   var nav = document.getElementById('nav'), links = document.getElementById('nav-links'), toggle = document.getElementById('nav-toggle'), dock = document.getElementById('dock');
-  var small = matchMedia('(max-width: 880px)');
+  var small = matchMedia('(max-width: 1020px)');
   function setMenu(open) { links.hidden = !open && small.matches; toggle.setAttribute('aria-expanded', String(open)); toggle.textContent = open ? 'Zamknij' : 'Menu'; }
   setMenu(false);
   small.addEventListener('change', function () { setMenu(false); });
@@ -61,7 +54,7 @@
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback); else fallback();
   });
 
-  /* formularz → gotowy e-mail (bez serwera) */
+  /* formularz → gotowy e-mail (bez serwera). Adres pochodzi z atrybutu data-mail. */
   var form = document.getElementById('wycena'), err = document.getElementById('f-err');
   if (form) form.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -69,7 +62,7 @@
     if (v('f-tel').replace(/\D/g, '').length < 9) { err.hidden = false; document.getElementById('f-tel').focus(); return; }
     err.hidden = true;
     var body = 'Temat: ' + v('f-temat') + '\n\n' + (v('f-opis') || '(bez opisu)') + '\n\nMiejscowość: ' + (v('f-miejsce') || '-') + '\nTelefon: ' + v('f-tel');
-    location.href = 'mailto:biuro@qmala.pl?subject=' + encodeURIComponent('Zapytanie o wycenę: ' + v('f-temat')) + '&body=' + encodeURIComponent(body);
+    location.href = 'mailto:' + form.dataset.mail + '?subject=' + encodeURIComponent('Zapytanie o wycenę: ' + v('f-temat')) + '&body=' + encodeURIComponent(body);
   });
 
   /* HERO: stos kafli w 3D, lekko podąża za kursorem */
@@ -89,6 +82,7 @@
     });
     hero.addEventListener('pointerleave', function () { tx = bx; ty = by; go(); });
   })();
+
   /* podgląd zdjęć: klik w miniaturę, strzałki, Esc */
   (function () {
     var shots = [].slice.call(document.querySelectorAll('.shot')); if (!shots.length) return;

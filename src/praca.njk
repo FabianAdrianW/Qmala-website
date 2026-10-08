@@ -1,0 +1,50 @@
+---js
+{
+  layout: "base.njk",
+  nav: "praca",
+  title: "Zatrudniamy – Qmala",
+  description: "Praca przy instalacjach elektrycznych we Wrocławiu. Aktualne ogłoszenia Zakładu Elektro-Instalacyjnego Wojciech Kumala.",
+  eleventyComputed: {
+    // przełącznik „Pokaż zakładkę” w panelu: wyłączony = strona w ogóle nie powstaje
+    permalink: (data) => (data.praca && data.praca.widoczna ? "praca.html" : false)
+  }
+}
+---
+<section class="page-head">
+  <div class="wrap">
+    <h1>Zatrudniamy</h1>
+    <p>{{ praca.wstep }}</p>
+  </div>
+</section>
+
+<section class="page-body">
+  <div class="wrap">
+    <div class="panels">
+      {%- for o in praca.ogloszenia %}
+      <article class="panel job">
+        <div class="panel-head">{% if o.miejsce %}<span class="tag">{{ o.miejsce }}</span>{% endif %}<h2>{{ o.stanowisko }}</h2>{% if o.opis %}<p>{{ o.opis }}</p>{% endif %}</div>
+        {%- if (o.wymagania and o.wymagania.length) or (o.oferujemy and o.oferujemy.length) %}
+        <div class="job-cols">
+          {%- if o.wymagania and o.wymagania.length %}
+          <div><h3>Czego oczekujemy</h3><ul class="checks">{% for w in o.wymagania %}<li>{% include "ico-check.njk" %}{{ w }}</li>{% endfor %}</ul></div>
+          {%- endif %}
+          {%- if o.oferujemy and o.oferujemy.length %}
+          <div><h3>Co oferujemy</h3><ul class="checks">{% for w in o.oferujemy %}<li>{% include "ico-check.njk" %}{{ w }}</li>{% endfor %}</ul></div>
+          {%- endif %}
+        </div>
+        {%- endif %}
+        <div class="more"><a class="btn btn-ghost" href="mailto:{{ site.email_praca }}?subject={{ ('Aplikacja: ' + o.stanowisko) | urlencode }}">Aplikuj na to stanowisko</a></div>
+      </article>
+      {%- else %}
+      <article class="panel"><p class="lede">{{ praca.brak_ogloszen }}</p></article>
+      {%- endfor %}
+    </div>
+    <div class="cta-row">
+      <p>Wyślij CV na {{ site.email_praca }}{% if praca.klauzula %}<small>{{ praca.klauzula }}</small>{% endif %}</p>
+      <div>
+        <a class="btn btn-primary" href="mailto:{{ site.email_praca }}?subject={{ 'CV' | urlencode }}">Wyślij CV</a>
+        <button class="copy copy-day" type="button" data-copy="{{ site.email_praca }}">Kopiuj adres</button>
+      </div>
+    </div>
+  </div>
+</section>

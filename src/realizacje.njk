@@ -1,0 +1,35 @@
+---
+layout: base.njk
+permalink: realizacje.html
+nav: realizacje
+title: Realizacje – Qmala
+description: "Zdjęcia z realizacji Zakładu Elektro-Instalacyjnego Wojciech Kumala: Politechnika Wrocławska, Muzeum Narodowe, EIT+, szkoły i osiedla we Wrocławiu."
+---
+<section class="page-head">
+  <div class="wrap">
+    <h1>Realizacje</h1>
+    <p>Obiekty: {{ collections.realizacje.length }}, zdjęcia: {{ collections.realizacje | ileZdjec }}. Kliknij zdjęcie, żeby je powiększyć.</p>
+    <nav class="jump" aria-label="Skocz do roku">{% for y in collections.realizacje | lata %}<a href="#r{{ y }}">{{ y }}</a>{% endfor %}</nav>
+  </div>
+</section>
+
+<section class="page-body">
+  <div class="wrap">
+    <div class="panels">
+      {%- for r in collections.realizacje %}
+      {%- set d = r.data %}
+      <article class="panel"{% if d.pierwszy %} id="r{{ d.rok }}"{% endif %}>
+        <div class="panel-head">{% if d.znak %}<span class="tag">{{ d.znak }}</span>{% endif %}<h2>{{ d.title }}</h2>{% if d.opis %}<p>{{ d.opis }}</p>{% endif %}</div>
+        {%- if d.foto.length %}
+        <div class="shots">
+          {%- for f in d.foto %}
+          <button class="shot" type="button" data-set="{{ r.fileSlug }}" data-full="{{ f.full }}" data-cap="{{ d.title }}" aria-label="Powiększ zdjęcie {{ loop.index }} z {{ d.foto.length }}: {{ d.title }}"><img src="{{ f.thumb }}" alt="" loading="lazy" width="{{ f.w }}" height="{{ f.h }}"></button>
+          {%- endfor %}
+        </div>
+        {%- endif %}
+      </article>
+      {%- endfor %}
+    </div>
+{% set cta = "Masz podobny obiekt? Wycenimy go." %}{% include "cta.njk" %}
+  </div>
+</section>

@@ -1,0 +1,88 @@
+# Panel strony qmala.pl (Sveltia CMS; składnia zgodna z Decap CMS).
+# PRZED WDROŻENIEM: wpisz repozytorium w polu "repo". Reszta: WDROZENIE.md.
+backend:
+  name: github
+  repo: FabianAdrianW/Qmala-website
+  branch: main
+
+site_url: https://qmala.pl
+display_url: https://qmala.pl
+locale: pl
+
+# Zdjęcia dodane w panelu trafiają tutaj. Przy budowaniu strona sama robi z nich
+# miniaturę 640 px i wersję 1600 px, więc można wrzucać zdjęcia prosto z telefonu.
+media_folder: src/uploads
+public_folder: /uploads
+
+collections:
+  - name: realizacje
+    label: Realizacje
+    label_singular: realizację
+    description: Każda realizacja to jeden kafel ze zdjęciami na podstronie „Realizacje”. Nowe pojawiają się też na liście na stronie głównej.
+    folder: src/realizacje
+    extension: md
+    format: frontmatter
+    create: true
+    slug: "{{rok}}-{{slug}}"
+    summary: "{{rok}} | {{title}}"
+    sortable_fields: [rok, title]
+    fields:
+      - { name: title, label: Nazwa obiektu, widget: string, hint: "Np. Szkoła Podstawowa nr 73" }
+      - { name: rok, label: Rok zakończenia, widget: number, value_type: int, min: 1978, max: 2100, required: false, hint: "Decyduje o kolejności: najnowsze są na górze." }
+      - { name: opis, label: Krótki opis, widget: text, required: false, hint: "Jedno lub dwa zdania: co zrobiliśmy i gdzie." }
+      - name: zdjecia
+        label: Zdjęcia
+        label_singular: zdjęcie
+        widget: list
+        required: false
+        hint: "Dodaj dowolną liczbę zdjęć. Pierwsze jest pokazywane jako pierwsze."
+        field: { name: zdjecie, label: Zdjęcie, widget: image, choose_url: true }
+      - { name: wyrozniona, label: Duży kafel na stronie głównej, widget: boolean, default: false, required: false, hint: "Na stronie głównej są trzy duże kafle. Trafiają na nie trzy najnowsze realizacje z włączonym tym przełącznikiem." }
+      - { name: etykieta, label: Napis zamiast roku, widget: string, required: false, hint: "Zwykle puste. Wpisz tylko wtedy, gdy sam rok nie pasuje, np. „2012–2013” albo „Stale”." }
+
+  - name: zatrudniamy
+    label: Zatrudniamy
+    files:
+      - name: praca
+        label: Zakładka „Zatrudniamy”
+        file: src/_data/praca.json
+        fields:
+          - { name: widoczna, label: Pokaż zakładkę „Zatrudniamy” na stronie, widget: boolean, default: false, hint: "Wyłączone: zakładka znika z menu i stopki, a podstrona przestaje istnieć. Ogłoszenia poniżej zostają zapisane na później." }
+          - { name: wstep, label: Zdanie pod nagłówkiem, widget: string }
+          - name: ogloszenia
+            label: Ogłoszenia
+            label_singular: ogłoszenie
+            widget: list
+            required: false
+            summary: "{{fields.stanowisko}}"
+            fields:
+              - { name: stanowisko, label: Stanowisko, widget: string, hint: "Np. Elektromonter" }
+              - { name: miejsce, label: Miejsce pracy, widget: string, required: false, hint: "Np. Wrocław i okolice" }
+              - { name: opis, label: Opis, widget: text, required: false }
+              - { name: wymagania, label: Czego oczekujemy, label_singular: punkt, widget: list, required: false, field: { name: punkt, label: Punkt, widget: string } }
+              - { name: oferujemy, label: Co oferujemy, label_singular: punkt, widget: list, required: false, field: { name: punkt, label: Punkt, widget: string } }
+          - { name: brak_ogloszen, label: Tekst, gdy nie ma żadnego ogłoszenia, widget: text }
+          - { name: klauzula, label: Dopisek o zgodzie na przetwarzanie danych, widget: string, required: false }
+
+  - name: dane
+    label: Dane firmy
+    files:
+      - name: site
+        label: Telefony, e-maile, adresy
+        file: src/_data/site.json
+        fields:
+          - { name: nazwa, label: Pełna nazwa firmy, widget: string }
+          - { name: telefon, label: Telefon główny, widget: string, hint: "Ten numer jest na wszystkich żółtych przyciskach. Format: 501 739 926" }
+          - { name: telefon_wyceny, label: Telefon do wycen, widget: string }
+          - { name: osoba_wyceny, label: Kto wycenia, widget: string }
+          - { name: email_wyceny, label: E-mail do wycen, widget: string, required: false }
+          - { name: email_biuro, label: E-mail biura, widget: string, hint: "Na ten adres trafiają zapytania z formularza." }
+          - { name: email_praca, label: E-mail dla kandydatów, widget: string }
+          - { name: nip, label: NIP, widget: string }
+          - { name: regon, label: REGON, widget: string }
+          - { name: siedziba_ulica, label: "Siedziba: ulica i numer", widget: string }
+          - { name: siedziba_miasto, label: "Siedziba: kod i miasto", widget: string }
+          - { name: korespondencja_ulica, label: "Korespondencja: ulica i numer", widget: string }
+          - { name: korespondencja_miasto, label: "Korespondencja: kod i miasto", widget: string }
+          - { name: facebook, label: Adres profilu na Facebooku, widget: string, required: false, hint: "Cały adres, np. https://www.facebook.com/nazwa. Puste = link się nie pokazuje." }
+          - { name: instagram, label: Adres profilu na Instagramie, widget: string, required: false, hint: "Puste = link się nie pokazuje." }
