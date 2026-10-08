@@ -4,7 +4,7 @@ Wyprowadzona z logo dostarczonego przez firmę (plik JPG 1376×768). Uzupełnia 
 
 ## 1. Logo
 - Pełne logo: znak Q + napis „MALA.PL” + podpis „ELEKTROINSTALACJE”. Q jest jednocześnie pierwszą literą nazwy.
-- Znak (sygnet): samo Q na granatowym zaokrąglonym kwadracie. Używany tam, gdzie pełne logo się nie mieści: favicon, ikona na telefonie, navbar.
+- Znak (sygnet): samo Q na białym tle (w favicon na białym zaokrąglonym kwadracie, żeby był czytelny także na ciemnej karcie przeglądarki). Używany tam, gdzie pełne logo się nie mieści: favicon, ikona na telefonie, navbar.
 - Logo jest zaprojektowane na ciemne tło. Na jasne tło jest osobna wersja (`logo-light.png`), przygotowana z oryginału skryptem `tools/logo-light.py` (wycięcie po kształcie liter, bez poświaty): usunięte tło, podpis „Elektroinstalacje” w błękicie marki, „.PL” i srebrna krawędź Q przyciemnione, żeby nie znikały na bieli. Oryginału na jasnym tle nie kładziemy.
 
 | Plik | Do czego |
@@ -14,7 +14,7 @@ Wyprowadzona z logo dostarczonego przez firmę (plik JPG 1376×768). Uzupełnia 
 | `src/assets/brand/logo-light.png` | pełne logo na jasne tło (navbar, dokumenty, faktury) |
 | `src/assets/brand/q-light.png`, `q-dark.png` | sam znak Q, przezroczyste tło (wąskie ekrany) |
 | `src/assets/brand/icon-192.png`, `icon-512.png` | ikona strony na telefonie |
-| `src/assets/favicon.ico`, `favicon-32.png`, `apple-touch-icon.png` | favicon |
+| `src/assets/favicon.ico`, `favicon-32.png`, `apple-touch-icon.png` | favicon: Q na białym tle (skrypt `tools/favicon.py`) |
 | `src/assets/brand/og.jpg` | obraz przy linku wklejonym w Messengerze, na Facebooku itp. |
 
 Zasady:
