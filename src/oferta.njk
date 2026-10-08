@@ -47,7 +47,7 @@ grupy:
   <div class="wrap">
     <div class="offer-grid">
       {%- for g in grupy %}
-      <article class="panel" id="{{ g.id }}">
+      <article class="panel tile" id="{{ g.id }}">
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{{ g.ikona | safe }}</svg></span>
         <div class="panel-head"><h2>{{ g.nazwa }}</h2><p>{{ g.opis }}</p></div>
         <ul class="checks">
@@ -57,7 +57,7 @@ grupy:
         </ul>
       </article>
       {%- endfor %}
-      <article class="panel wide">
+      <article class="panel tile wide">
         <div class="panel-head"><h2>Jak wyceniamy</h2></div>
         <dl class="facts flat">
           <div><dt>Doradzamy od projektu</dt><dd>Najtaniej poprawia się instalację na papierze, więc rozmawiamy już przy projektowaniu.</dd></div>
