@@ -5,7 +5,7 @@ Wyprowadzona z logo dostarczonego przez firmę (plik JPG 1376×768). Uzupełnia 
 ## 1. Logo
 - Pełne logo: znak Q + napis „MALA.PL” + podpis „ELEKTROINSTALACJE”. Q jest jednocześnie pierwszą literą nazwy.
 - Znak (sygnet): samo Q na granatowym zaokrąglonym kwadracie. Używany tam, gdzie pełne logo się nie mieści: favicon, ikona na telefonie, navbar.
-- Logo jest zaprojektowane na ciemne tło. Na jasne tło jest osobna wersja (`logo-light.png`), przygotowana z oryginału: usunięte tło, podpis „Elektroinstalacje” w błękicie marki, „.PL” i srebrna krawędź Q przyciemnione, żeby nie znikały na bieli. Oryginału na jasnym tle nie kładziemy.
+- Logo jest zaprojektowane na ciemne tło. Na jasne tło jest osobna wersja (`logo-light.png`), przygotowana z oryginału skryptem `tools/logo-light.py` (wycięcie po kształcie liter, bez poświaty): usunięte tło, podpis „Elektroinstalacje” w błękicie marki, „.PL” i srebrna krawędź Q przyciemnione, żeby nie znikały na bieli. Oryginału na jasnym tle nie kładziemy.
 
 | Plik | Do czego |
 |---|---|
