@@ -71,6 +71,8 @@ def finish(col, name, light):
     al = ndi.gaussian_filter(fg.astype(float), 0.8)
     rgba = np.dstack([np.clip(c, 0, 255), al * 255]).astype("uint8")
     img = Image.fromarray(rgba, "RGBA")
+    if light:  # znak Q w pełnej rozdzielczości roboczej, źródło dla favicon (tools/favicon.py)
+        img.crop((0, 0, int(X(405)), img.height)).save("tools/q-light-big.png", optimize=True)
     w = 1140; h = round(img.height * w / img.width)
     img = img.resize((w, h), Image.LANCZOS)
     img.save(f"{out_dir}/{name}", optimize=True)
