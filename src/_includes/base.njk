@@ -25,9 +25,9 @@
 
 <header class="nav" id="nav">
   <div class="wrap nav-in">
-    <a class="brand" href="{{ '#top' if home else 'index.html' }}" aria-label="Qmala, początek strony">
-      <img src="brand/q-96.png" alt="" width="40" height="40">
-      <span><b>Qmala<i>.pl</i></b><small>Elektroinstalacje</small></span>
+    <a class="brand" href="{{ '#top' if home else 'index.html' }}" aria-label="QMALA.PL Elektroinstalacje, początek strony">
+      <picture class="brand-full"><source srcset="brand/logo-dark.png" media="(prefers-color-scheme: dark)"><img src="brand/logo-light.png" alt="" width="760" height="206"></picture>
+      <picture class="brand-q"><source srcset="brand/q-dark.png" media="(prefers-color-scheme: dark)"><img src="brand/q-light.png" alt="" width="212" height="206"></picture>
     </a>
     <nav class="nav-links" id="nav-links" aria-label="Główna">
       <a href="oferta.html"{% if nav == "oferta" %} aria-current="page"{% endif %}>Oferta</a>

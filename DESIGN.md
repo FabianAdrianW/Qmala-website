@@ -1,7 +1,9 @@
-# Qmala — DESIGN.md (źródło prawdy UI), wersja 6
+# Qmala — DESIGN.md (źródło prawdy UI), wersja 7
 
 Jedyny obowiązujący opis stylu strony qmala.pl. Kod (`src/assets/style.css`, blok `:root`) musi się z nim zgadzać.
 Kolejność ważności: słowa właściciela → ten plik → gust wykonawcy. Zmiana tokenu = zmiana tu i w `:root` jednocześnie.
+
+Zmiany w wersji 7: w navbarze pełne logo w wersji na jasne tło (w trybie ciemnym wersja na ciemne), panele na podstronie „Oferta” reagują na kursor jak kafle.
 
 Zmiany w wersji 6: kolory i znak z logo QMALA.PL (pełny opis marki: `BRAND.md`), akcja niebieska/cyjanowa zamiast żółtej, logo w navbarze i stopce, favicon.
 
@@ -56,9 +58,9 @@ Zasady:
 - Kolejność sekcji strony głównej: Hero → Oferta → Realizacje → Firma (zajawka z linkiem do „O firmie”) → Kontakt z wyceną (noc) → Stopka (noc).
 
 ## 5. Komponenty
-- **Navbar**: jasna belka na całą szerokość, `position: fixed`, STAŁA wysokość 68 px, tło `--bg` z rozmyciem. Przy przewijaniu pojawia się tylko dolna linia. Nigdy `sticky` ze zmianą rozmiaru. Po lewej znak Q (40 px, zaokrąglony kwadrat) z napisem „QMALA.PL” i podpisem „Elektroinstalacje”, linki w białej pigułce, przycisk „Zadzwoń 501 739 926” w kolorze akcji.
+- **Navbar**: jasna belka na całą szerokość, `position: fixed`, STAŁA wysokość 68 px, tło `--bg` z rozmyciem. Przy przewijaniu pojawia się tylko dolna linia. Nigdy `sticky` ze zmianą rozmiaru. Po lewej pełne logo jako obraz (wys. 50 px; `logo-light.png`, w trybie ciemnym `logo-dark.png`), linki w białej pigułce, przycisk „Zadzwoń 501 739 926” w kolorze akcji.
   - Pozycje: Oferta, Realizacje, Referencje, Firma, [Zatrudniamy], Kontakt. „Zatrudniamy” istnieje tylko przy włączonym przełączniku; zawsze przedostatnie, Kontakt zostaje ostatni.
-  - Progi: ≤ 1180 px znika podpis logo i numer w przycisku, ≤ 1020 px linki zwijają się pod „Menu” (ta sama wartość w `site.js`), ≤ 460 px przycisk „Zadzwoń” traci ikonę, ≤ 380 px zostaje sam znak Q bez napisu.
+  - Progi: ≤ 1180 px znika podpis logo i numer w przycisku, ≤ 1020 px linki zwijają się pod „Menu” (ta sama wartość w `site.js`), ≤ 1180 px logo ma 44 px, ≤ 460 px logo ma 38 px, a przycisk „Zadzwoń” traci ikonę, ≤ 380 px zostaje sam znak Q (`q-light.png` / `q-dark.png`).
   - Odrzucone: ciemna pływająca pigułka.
 - **Przycisk główny**: kolor akcji, pigułka, 54 px, z czasownikiem. **Ghost**: obrys, akcja druga. **Dark**: tylko na kaflu CTA (odwrócone kolory akcji).
 - **Hero**: jasne tło. Po lewej h1, lead, 2 CTA i linia z numerem do wycen. Po prawej stos trzech kafli w 3D: nocny „Zaufali nam”, biały „1978”, biały „Wrocław i cała Polska”. Na telefonie płaska siatka. Odrzucone: ciemny hero, przewód WebGL, rozdzielnica.
@@ -82,7 +84,7 @@ Zasady:
 
 Komponenty podstron:
 - **Nagłówek podstrony**: h1 (38–64 px) + jedno zdanie, opcjonalnie rząd pigułek-kotwic. Bez hero i bez 3D.
-- **Panel**: wygląd kafla (surface, obrys, r 24), bez pochylenia. Nagłówek: pigułka (rok, miejsce, „Krok n”) + h2/h3.
+- **Panel**: wygląd kafla (surface, obrys, r 24), bez pochylenia. Wyjątek na życzenie właściciela: panele na „Oferta” mają klasę `panel tile` i reagują na kursor jak kafle (pochylenie i światło). Nagłówek: pigułka (rok, miejsce, „Krok n”) + h2/h3.
 - **Nagłówek bloku** (`.about-head`): h2 28–40 px + jedno zdanie, odstęp 72 px od góry.
 - **Trójka** (`.trio`): 3 panele obok siebie, na telefonie jeden pod drugim.
 - **Kroki** (`.steps`): 4 panele z pigułką „Krok n”. Numeracja dozwolona tylko tu, bo to prawdziwa kolejność.
@@ -118,7 +120,7 @@ Komponenty podstron:
 Jedna akcja w kolorze akcji w polu widzenia na raz (wyjątek: navbar).
 
 ## 7. Ruch i 3D
-- 3D tylko w CSS: stos kafli w hero (głębia 0 / 90 / 160 px, podąża za kursorem) oraz pochylenie kafli na stronie głównej. Panele podstron się nie pochylają. Żadnych bibliotek 3D.
+- 3D tylko w CSS: stos kafli w hero (głębia 0 / 90 / 160 px, podąża za kursorem) oraz pochylenie kafli na stronie głównej. Panele podstron się nie pochylają, poza panelami oferty. Żadnych bibliotek 3D.
 - Sekcje NIE wjeżdżają przy przewijaniu. Treść kompletna bez JS.
 - `prefers-reduced-motion`: stos stoi w pozycji spoczynkowej, kafle się nie pochylają.
 
@@ -143,7 +145,7 @@ Jedna akcja w kolorze akcji w polu widzenia na raz (wyjątek: navbar).
 - Przycisk nazywa skutek: „Zadzwoń”, „Poproś o wycenę”, „Wyślij zapytanie”, „Wyślij CV”, „Kopiuj”.
 
 ## 10. Zakazane
-Navbar zmieniający wysokość; ciemny hero lub navbar przy jasnej reszcie; WebGL w hero; gradient fiolet→niebieski; tekst gradientowy; emoji jako ikony; etykiety wersalikami; numeracja 01/02/03 poza prawdziwą sekwencją; strzałka w przycisku; wjeżdżające sekcje; liczniki „500+”; zdjęcia stockowe; wymyślone opinie i ogłoszenia; więcej niż jedna akcja w kolorze akcji w widoku; żółty kolor akcji; cyjanowy tekst na jasnym tle; logo na jasnym tle bez granatowego podkładu; trzeci motyw 3D; treść przepisana ze stron innych firm.
+Navbar zmieniający wysokość; ciemny hero lub navbar przy jasnej reszcie; WebGL w hero; gradient fiolet→niebieski; tekst gradientowy; emoji jako ikony; etykiety wersalikami; numeracja 01/02/03 poza prawdziwą sekwencją; strzałka w przycisku; wjeżdżające sekcje; liczniki „500+”; zdjęcia stockowe; wymyślone opinie i ogłoszenia; więcej niż jedna akcja w kolorze akcji w widoku; żółty kolor akcji; cyjanowy tekst na jasnym tle; oryginalne (ciemne) logo na jasnym tle; trzeci motyw 3D; treść przepisana ze stron innych firm.
 
 ## 11. Do uzupełnienia lub potwierdzenia przez firmę
 - Adresy Facebook i Instagram (panel → Dane firmy). Do tego czasu linki są ukryte.

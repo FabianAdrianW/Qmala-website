@@ -97,10 +97,9 @@ h3 { font-size: var(--fs-3); line-height: 1.15; font-weight: 600; letter-spacing
 .nav.is-scrolled { border-bottom-color: var(--line); }
 .nav-in { position: relative; display: flex; align-items: center; gap: var(--s-2); height: 68px; }
 .brand { display: flex; align-items: center; gap: 11px; text-decoration: none; margin-right: auto; }
-.brand img { width: 40px; height: 40px; flex: none; border-radius: 11px; display: block; }
-.brand b { display: block; font: 700 1.3rem/1 var(--font-display); letter-spacing: .01em; text-transform: uppercase; }
-.brand b i { font-style: normal; color: var(--link); }
-.brand small { display: block; font-size: .78rem; line-height: 1.2; color: var(--ink-2); margin-top: 3px; white-space: nowrap; }
+.brand picture { display: block; }
+.brand img { display: block; height: 50px; width: auto; }
+.brand-q { display: none !important; }
 .nav-links { display: flex; gap: 2px; padding: 4px; border-radius: var(--r-pill); background: var(--surface); border: 1px solid var(--line); }
 .nav-links a {
   padding: 8px 16px; border-radius: var(--r-pill); text-decoration: none; font-weight: 500; font-size: 1rem; white-space: nowrap;
@@ -111,7 +110,7 @@ h3 { font-size: var(--fs-3); line-height: 1.15; font-weight: 600; letter-spacing
 .nav-call { min-height: 44px; padding: 0 18px; box-shadow: none; margin-left: var(--s-1); }
 .nav-toggle { display: none; }
 @media (max-width: 1180px) { .nav-call .num { display: none; } }
-@media (max-width: 1180px) { .brand small { display: none; } .nav-in { gap: 8px; } .nav-links a { padding-inline: 11px; } .nav-call { margin-left: 0; } }
+@media (max-width: 1180px) { .brand img { height: 44px; } .nav-in { gap: 8px; } .nav-links a { padding-inline: 11px; } .nav-call { margin-left: 0; } }
 /* menu zwija się poniżej 1020 px (ta sama wartość w site.js), żeby zmieściło 6 pozycji z „Zatrudniamy” */
 @media (max-width: 1020px) {
   .nav-toggle {
@@ -127,8 +126,8 @@ h3 { font-size: var(--fs-3); line-height: 1.15; font-weight: 600; letter-spacing
   .nav-links[hidden] { display: none; }
   .nav-links a { padding: 15px 16px; font-size: var(--fs-2); color: var(--ink); border-radius: 14px; }
 }
-@media (max-width: 460px) { .brand b { font-size: 1.1rem; } .nav-call { padding: 0 14px; } .nav-call svg { display: none; } .nav-toggle { padding: 0 13px; } }
-@media (max-width: 380px) { .brand span { display: none; } }
+@media (max-width: 460px) { .brand img { height: 38px; } .nav-call { padding: 0 14px; } .nav-call svg { display: none; } .nav-toggle { padding: 0 13px; } }
+@media (max-width: 380px) { .brand-full { display: none !important; } .brand-q { display: block !important; } }
 @media (min-width: 1021px) { .nav-links[hidden] { display: flex !important; } }
 
 /* HERO — ten sam język co reszta: jasne tło, kafle. Stos kafli w 3D po prawej. */
@@ -333,6 +332,9 @@ h3 { font-size: var(--fs-3); line-height: 1.15; font-weight: 600; letter-spacing
 .checks li { display: flex; gap: 12px; align-items: flex-start; }
 .checks svg { width: 20px; height: 20px; flex: none; margin-top: 3px; color: var(--lamp); }
 .panel.wide { grid-column: 1 / -1; }
+/* panele oferty reagują na kursor tak jak kafle na stronie głównej */
+.panel.tile { gap: var(--s-3); }
+.panel.tile h2 { transform: translateZ(22px); }
 @media (max-width: 760px) { .offer-grid { grid-template-columns: minmax(0, 1fr); } }
 /* referencje */
 .refs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-2); }
