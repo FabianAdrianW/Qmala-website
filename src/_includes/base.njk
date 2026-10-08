@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{{ title }}</title>
 <meta name="description" content="{{ description }}">
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#0B1626">
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ title }}">
+<meta property="og:description" content="{{ description }}">
+<meta property="og:image" content="{{ baseUrl }}/brand/og.jpg">
+<meta property="og:locale" content="pl_PL">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Geist:wght@400;500;600&display=swap">
@@ -16,13 +26,8 @@
 <header class="nav" id="nav">
   <div class="wrap nav-in">
     <a class="brand" href="{{ '#top' if home else 'index.html' }}" aria-label="Qmala, początek strony">
-      <!-- znak-propozycja: przekrój przewodu trójżyłowego (L, N, PE) -->
-      <svg viewBox="0 0 34 34" aria-hidden="true">
-        <defs><pattern id="pe" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="5" height="5" fill="#FFD21F"/><rect width="2.5" height="5" fill="#3DAA4A"/></pattern></defs>
-        <circle cx="17" cy="17" r="15.5" fill="none" stroke="currentColor" stroke-width="3"/>
-        <circle cx="17" cy="10.4" r="4.3" fill="#B0703F"/><circle cx="11.2" cy="20.6" r="4.3" fill="#3B7BFF"/><circle cx="22.8" cy="20.6" r="4.3" fill="url(#pe)"/>
-      </svg>
-      <span><b>Qmala</b><small>Zakład Elektro-Instalacyjny</small></span>
+      <img src="brand/q-96.png" alt="" width="40" height="40">
+      <span><b>Qmala<i>.pl</i></b><small>Elektroinstalacje</small></span>
     </a>
     <nav class="nav-links" id="nav-links" aria-label="Główna">
       <a href="oferta.html"{% if nav == "oferta" %} aria-current="page"{% endif %}>Oferta</a>
@@ -48,6 +53,7 @@
 
 <footer class="foot">
   <div class="wrap">
+    <div class="foot-logo"><img src="brand/logo-dark.png" alt="QMALA.PL Elektroinstalacje" width="760" height="206" loading="lazy"></div>
     <div><b>{{ site.nazwa }}</b>NIP {{ site.nip }}<br>REGON {{ site.regon }}</div>
     <div><b>Siedziba</b>{{ site.siedziba_ulica }}<br>{{ site.siedziba_miasto }}<br><a href="https://www.google.com/maps/search/?api=1&query={{ (site.siedziba_ulica + ', ' + site.siedziba_miasto) | urlencode }}" target="_blank" rel="noopener">Pokaż na mapie</a></div>
     <div><b>Korespondencja</b>{{ site.korespondencja_ulica }}<br>{{ site.korespondencja_miasto }}</div>

@@ -72,7 +72,7 @@ collections:
         file: src/_data/site.json
         fields:
           - { name: nazwa, label: Pełna nazwa firmy, widget: string }
-          - { name: telefon, label: Telefon główny, widget: string, hint: "Ten numer jest na wszystkich żółtych przyciskach. Format: 501 739 926" }
+          - { name: telefon, label: Telefon główny, widget: string, hint: "Ten numer jest na wszystkich przyciskach „Zadzwoń”. Format: 501 739 926" }
           - { name: telefon_wyceny, label: Telefon do wycen, widget: string }
           - { name: osoba_wyceny, label: Kto wycenia, widget: string }
           - { name: email_wyceny, label: E-mail do wycen, widget: string, required: false }

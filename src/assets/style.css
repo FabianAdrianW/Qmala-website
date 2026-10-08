@@ -1,24 +1,29 @@
-/* ŹRÓDŁO PRAWDY: DESIGN.md. Zmieniasz token tutaj → zmień go też tam.
+/* ŹRÓDŁO PRAWDY: DESIGN.md i BRAND.md. Zmieniasz token tutaj → zmień go też tam.
    Layout: jasna strona zbudowana z kafli, ciemne tylko kafle wyróżnione i zamknięcie (kontakt, stopka). W hero stos kafli w 3D. */
 :root {
-  --bg: #F3F5F7;
+  /* marka: granat, błękit królewski i cyjan z logo QMALA.PL (BRAND.md) */
+  --brand-navy: #0B1626;
+  --brand-blue: #2350C4;
+  --brand-cyan: #2FE3F2;
+  --brand-ice: #93CFE2;
+  --bg: #F2F5F9;
   --surface: #FFFFFF;
-  --ink: #0C1320;
-  --ink-2: #566170;
-  --line: #DCE1E7;
-  --link: #1F4FE0;
-  /* akcja: żółć „pod napięciem”. Tylko CTA. */
-  --action: #FFD21F;
-  --action-hover: #FFE169;
-  --action-ink: #0C1320;
-  /* noc: kafle wyróżnione, kontakt, stopka */
-  --night: #0A1019;
-  --night-2: #131C29;
-  --night-line: #263347;
-  --night-ink: #F2F5F8;
-  --night-ink-2: #9DA9B8;
+  --ink: #0B1626;
+  --ink-2: #55637A;
+  --line: #D9E0EA;
+  --link: #1F4BC2;
+  /* akcja: błękit marki na jasnym tle, cyjan na ciemnym. Tylko CTA. */
+  --action: var(--brand-blue);
+  --action-hover: #2E61DD;
+  --action-ink: #FFFFFF;
+  /* noc: kafle wyróżnione, kontakt, stopka. Granat z tła logo. */
+  --night: #060F1D;
+  --night-2: #0F1B2C;
+  --night-line: #223250;
+  --night-ink: #F1F5FA;
+  --night-ink-2: #9DB0C6;
   --lamp: #37D067;
-  --shadow: rgba(12, 19, 32, .14);
+  --shadow: rgba(11, 22, 38, .16);
   --font-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
   --font-body: "Geist", "Segoe UI", system-ui, -apple-system, sans-serif;
   --fs-0: .875rem; --fs-1: 1.0625rem; --fs-2: 1.25rem; --fs-3: 1.5rem;
@@ -31,14 +36,18 @@
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0D141D; --surface: #141D29; --ink: #F2F5F8; --ink-2: #9DA9B8; --line: #263347; --link: #8FB0FF;
-    --night: #070B12; --shadow: rgba(0, 0, 0, .5); color-scheme: dark;
+    --bg: #08111E; --surface: #0F1B2C; --ink: #F1F5FA; --ink-2: #9DB0C6; --line: #223250; --link: #8FB4FF;
+    --action: var(--brand-cyan); --action-hover: #7BEEF7; --action-ink: #06101D;
+    --night: #040B16; --shadow: rgba(0, 0, 0, .5); color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --bg: #0D141D; --surface: #141D29; --ink: #F2F5F8; --ink-2: #9DA9B8; --line: #263347; --link: #8FB0FF;
-  --night: #070B12; --shadow: rgba(0, 0, 0, .5); color-scheme: dark;
+  --bg: #08111E; --surface: #0F1B2C; --ink: #F1F5FA; --ink-2: #9DB0C6; --line: #223250; --link: #8FB4FF;
+  --action: var(--brand-cyan); --action-hover: #7BEEF7; --action-ink: #06101D;
+  --night: #040B16; --shadow: rgba(0, 0, 0, .5); color-scheme: dark;
 }
+/* na ciemnych powierzchniach akcja jest cyjanowa (jak „.PL” w logo) */
+.night, .tile-night, .quote, .foot, .dock, .lb { --action: var(--brand-cyan); --action-hover: #7BEEF7; --action-ink: #06101D; }
 
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
@@ -88,8 +97,9 @@ h3 { font-size: var(--fs-3); line-height: 1.15; font-weight: 600; letter-spacing
 .nav.is-scrolled { border-bottom-color: var(--line); }
 .nav-in { position: relative; display: flex; align-items: center; gap: var(--s-2); height: 68px; }
 .brand { display: flex; align-items: center; gap: 11px; text-decoration: none; margin-right: auto; }
-.brand svg { width: 34px; height: 34px; flex: none; }
-.brand b { display: block; font: 700 1.4rem/1 var(--font-display); letter-spacing: -.02em; }
+.brand img { width: 40px; height: 40px; flex: none; border-radius: 11px; display: block; }
+.brand b { display: block; font: 700 1.3rem/1 var(--font-display); letter-spacing: .01em; text-transform: uppercase; }
+.brand b i { font-style: normal; color: var(--link); }
 .brand small { display: block; font-size: .78rem; line-height: 1.2; color: var(--ink-2); margin-top: 3px; white-space: nowrap; }
 .nav-links { display: flex; gap: 2px; padding: 4px; border-radius: var(--r-pill); background: var(--surface); border: 1px solid var(--line); }
 .nav-links a {
@@ -117,6 +127,8 @@ h3 { font-size: var(--fs-3); line-height: 1.15; font-weight: 600; letter-spacing
   .nav-links[hidden] { display: none; }
   .nav-links a { padding: 15px 16px; font-size: var(--fs-2); color: var(--ink); border-radius: 14px; }
 }
+@media (max-width: 460px) { .brand b { font-size: 1.1rem; } .nav-call { padding: 0 14px; } .nav-call svg { display: none; } .nav-toggle { padding: 0 13px; } }
+@media (max-width: 380px) { .brand span { display: none; } }
 @media (min-width: 1021px) { .nav-links[hidden] { display: flex !important; } }
 
 /* HERO — ten sam język co reszta: jasne tło, kafle. Stos kafli w 3D po prawej. */
@@ -177,6 +189,7 @@ h3 { font-size: var(--fs-3); line-height: 1.15; font-weight: 600; letter-spacing
 .tile-cta { background: var(--action); border-color: var(--action); color: var(--action-ink); align-content: space-between; }
 .tile-cta p { color: var(--action-ink); opacity: .8; }
 .tile-cta::before { display: none; }
+.tile-cta .btn-dark { background: var(--action-ink); color: var(--action); }
 
 .bento { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--s-2); }
 .c-7 { grid-column: span 7; } .c-5 { grid-column: span 5; } .c-4 { grid-column: span 4; } .c-8 { grid-column: span 8; }
@@ -263,6 +276,8 @@ h3 { font-size: var(--fs-3); line-height: 1.15; font-weight: 600; letter-spacing
 /* STOPKA */
 .foot { background: var(--night); color: var(--night-ink-2); font-size: var(--fs-0); padding-block: var(--s-4) calc(var(--s-4) + env(safe-area-inset-bottom, 0px)); }
 .foot .wrap { border-top: 1px solid var(--night-line); padding-top: var(--s-4); display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s-3) var(--s-4); }
+.foot .foot-logo { grid-column: 1 / -1; }
+.foot .foot-logo img { display: block; width: min(300px, 78%); height: auto; }
 .foot b { display: block; color: var(--night-ink); font-weight: 600; margin-bottom: 4px; }
 .foot a { text-underline-offset: 4px; }
 .foot .links { display: grid; gap: 4px; justify-items: start; align-content: start; }

@@ -25,6 +25,7 @@ export default function (cfg) {
   cfg.addPassthroughCopy("src/admin");
   cfg.addPassthroughCopy({ "src/images": "images" }); // zdjęcia ze starej strony, adresy /images/... muszą zostać
   cfg.ignores.add("src/admin/**");
+  cfg.addGlobalData("baseUrl", () => (process.env.URL || "https://qmala.pl").replace(/\/$/, "")); // Netlify podaje adres strony w URL
   cfg.addGlobalData("teraz", () => new Date().getFullYear());
 
   cfg.addFilter("tel", (n) => "tel:+48" + String(n || "").replace(/\D/g, ""));
