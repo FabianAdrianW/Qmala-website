@@ -1,0 +1,182 @@
+---
+layout: base.njk
+permalink: index.html
+home: true
+title: Qmala – instalacje elektryczne Wrocław
+description: Zakład Elektro-Instalacyjny Wojciech Kumala. Instalacje elektryczne, rozdzielnice, automatyka LCN, pomiary i projekty. Wrocław i cała Polska, od 1978 roku.
+---
+<section class="hero" id="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <h1>Instalacje elektryczne we Wrocławiu od 1978 roku</h1>
+      <p class="lede">Rodzinny zakład, drugie pokolenie elektryków. Domy, biura i obiekty przemysłowe: od projektu, przez montaż, po pomiary.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="{{ site.telefon | tel }}">
+          {% include "ico-phone.njk" %}
+          Zadzwoń: {{ site.telefon }}
+        </a>
+        <a class="btn btn-ghost" href="#wycena">Poproś o wycenę</a>
+      </div>
+      <p class="hero-note">Wolisz od razu rozmawiać o cenie? Wyceny: <a href="{{ site.telefon_wyceny | tel }}">{{ site.telefon_wyceny }}</a></p>
+    </div>
+    <div class="stack-scene">
+      <div class="stack" id="stack">
+        <div class="tile tile-night s s-a">
+          <h3>Zaufali nam</h3>
+          <ul class="trust">
+            <li>{% include "ico-check.njk" %}Politechnika Wrocławska</li>
+            <li>{% include "ico-check.njk" %}Muzeum Narodowe we Wrocławiu</li>
+            <li>{% include "ico-check.njk" %}Dolnośląskie Centrum Badań EIT+</li>
+          </ul>
+        </div>
+        <div class="tile s s-b">
+          <b class="big">1978</b>
+          <p>Dwa pokolenia elektryków w jednym zakładzie</p>
+        </div>
+        <div class="tile s s-c">
+          <span class="lamp-row"><i></i>Wrocław i cała Polska</span>
+          <p>Projekt, montaż, pomiary</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="oferta">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Jedna ekipa od przyłącza po pomiary</h2>
+      <p>Nie musisz szukać osobno projektanta, montera i pomiarowca. Robimy całość.</p>
+    </div>
+    <div class="bento">
+      <article class="tile tile-night c-7">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span>
+        <h3>Instalacje elektryczne</h3>
+        <p>Nowe instalacje i modernizacje. Przyjeżdżamy też do awarii.</p>
+        <ul class="chips"><li>Budynki mieszkalne</li><li>Obiekty przemysłowe</li><li>Obiekty użyteczności publicznej</li><li>Usuwanie awarii</li></ul>
+      </article>
+      <article class="tile c-5">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5V20H3z"/><path d="M9 15.5a4.2 4.2 0 0 1 6 0"/><circle cx="12" cy="17.6" r=".6" fill="currentColor"/></svg></span>
+        <h3>Inteligentny dom i automatyka</h3>
+        <p>Światło, rolety i ogrzewanie sterowane z jednego miejsca.</p>
+        <ul class="chips"><li>System LCN</li><li>Automatyka i sterowanie</li></ul>
+      </article>
+      <article class="tile c-4">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2.5"/><path d="M8.5 8v4M12 8v4M15.5 8v4M8 16.5h8"/></svg></span>
+        <h3>Rozdzielnice</h3>
+        <ul class="chips"><li>Rozdzielnie elektryczne</li><li>Kompletacja i montaż rozdzielnic nn</li></ul>
+      </article>
+      <article class="tile c-4">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 18h5M10.5 21h3M12 3a6 6 0 0 0-4 10.5c.7.7 1.1 1.5 1.1 2.5h5.8c0-1 .4-1.8 1.1-2.5A6 6 0 0 0 12 3z"/></svg></span>
+        <h3>Oświetlenie</h3>
+        <ul class="chips"><li>Dekoracyjne i użytkowe</li><li>Iluminacje elewacji</li><li>Pomiary natężenia</li></ul>
+      </article>
+      <article class="tile c-4">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 16a8 8 0 1 1 16 0"/><path d="M12 16l4-5.5"/><circle cx="12" cy="16" r="1.3" fill="currentColor"/></svg></span>
+        <h3>Projekty i pomiary</h3>
+        <ul class="chips"><li>Projekty elektryczne</li><li>Pomiary elektryczne</li><li>Przeglądy okresowe</li><li>Instalacje odgromowe</li></ul>
+      </article>
+      <article class="tile c-8">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="5" r="2.2"/><circle cx="5" cy="19" r="2.2"/><circle cx="19" cy="19" r="2.2"/><path d="M12 7.2V13M12 13l-5.6 4.2M12 13l5.6 4.2"/></svg></span>
+        <h3>Sieci, telewizja i zabezpieczenia</h3>
+        <p>Wszystko, co niskoprądowe, przy okazji jednej wizyty.</p>
+        <ul class="chips"><li>Sieci komputerowe i telefoniczne</li><li>Okablowanie strukturalne</li><li>Anteny naziemne i satelitarne</li><li>Wideofony i domofony</li><li>Monitoring</li></ul>
+      </article>
+      <aside class="tile tile-cta c-4">
+        <div><h3>Nie widzisz swojego tematu?</h3><p>Zadzwoń. Pewnie też to robimy.</p></div>
+        <a class="btn btn-dark" href="{{ site.telefon | tel }}">Zadzwoń: {{ site.telefon }}</a>
+      </aside>
+    </div>
+    <div class="more"><a class="btn btn-ghost" href="oferta.html">Zobacz pełną ofertę</a></div>
+  </div>
+</section>
+
+<section class="sec" id="realizacje" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>Zaufały nam uczelnie, muzeum i deweloperzy</h2>
+      <p>Wybrane obiekty z Wrocławia i okolic.</p>
+    </div>
+    {#- trzy pierwsze realizacje oznaczone w panelu jako wyróżnione → duże kafle, reszta → lista -#}
+    {%- set duze = [] %}{% set reszta = [] %}
+    {%- for r in collections.realizacje %}
+      {%- if r.data.wyrozniona and duze.length < 3 %}{% set _ = duze.push(r) %}{% else %}{% set _ = reszta.push(r) %}{% endif %}
+    {%- endfor %}
+    {%- if duze.length %}
+    <div class="feat">
+      {%- for r in duze %}
+      <article class="tile tile-night"><span class="yr">{{ r.data.znak }}</span><div><h3>{{ r.data.title }}</h3>{% if r.data.opis %}<p>{{ r.data.opis }}</p>{% endif %}</div></article>
+      {%- endfor %}
+    </div>
+    {%- endif %}
+    <ul class="works">
+      {%- for r in reszta %}
+      <li><b>{{ r.data.znak }}</b><div><strong>{{ r.data.title }}</strong>{% if r.data.opis %}<span>{{ r.data.opis }}</span>{% endif %}</div></li>
+      {%- endfor %}
+    </ul>
+    <div class="cta-row">
+      <p>Masz podobny obiekt? Wycenimy go.</p>
+      <div>
+        <a class="btn btn-primary" href="#wycena">Poproś o wycenę</a>
+        <a class="btn btn-ghost" href="realizacje.html">Zobacz zdjęcia z realizacji</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec firm" id="firma">
+  <div class="wrap">
+    <div class="firm-grid">
+      <div class="firm-copy">
+        <h2>Dwa pokolenia, jeden zakład</h2>
+        <p class="lede">Zakład założył w 1978 roku Mirosław Kumala. Od 1999 roku pracuje w nim jego syn, Wojciech.</p>
+        <p>Dzwoniąc do nas, rozmawiasz z ludźmi, którzy wyceniają robotę i za nią odpowiadają. Mamy uprawnienia, wieloletnią praktykę i pisemne <a href="referencje.html">referencje od klientów</a>.</p>
+        <div class="more"><a class="btn btn-ghost" href="o-firmie.html">Poznaj firmę i sposób pracy</a></div>
+      </div>
+      <ol class="timeline">
+        <li><b>1978</b><span>Mirosław Kumala zakłada zakład elektroinstalacyjny we Wrocławiu.</span></li>
+        <li><b>1999</b><span>Do firmy dołącza syn, Wojciech Kumala.</span></li>
+        <li><b>2011–2015</b><span>Instalacje dla Politechniki Wrocławskiej, Muzeum Narodowego i centrum badawczego EIT+.</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="sec night" id="kontakt">
+  <div class="wrap contact-grid">
+    <div>
+      <h2>Zadzwoń i powiedz, co trzeba zrobić</h2>
+      <a class="bigtel" href="{{ site.telefon | tel }}">{{ site.telefon }}</a>
+      <dl class="lines">
+        <div class="line"><dt>Wyceny</dt><dd><a href="{{ site.telefon_wyceny | tel }}">{{ site.telefon_wyceny }}</a><small>{{ site.osoba_wyceny }}{% if site.email_wyceny %}, <a href="mailto:{{ site.email_wyceny }}">{{ site.email_wyceny }}</a>{% endif %}</small></dd><dd><button class="copy" type="button" data-copy="{{ site.telefon_wyceny | digits }}">Kopiuj</button></dd></div>
+        <div class="line"><dt>Biuro</dt><dd><a href="mailto:{{ site.email_biuro }}">{{ site.email_biuro }}</a></dd><dd><button class="copy" type="button" data-copy="{{ site.email_biuro }}">Kopiuj</button></dd></div>
+        <div class="line"><dt>Praca</dt><dd><a href="mailto:{{ site.email_praca }}">{{ site.email_praca }}</a><small>{% if praca.widoczna %}<a href="praca.html">Zobacz, kogo szukamy</a>{% else %}Szukasz pracy? Wyślij CV.{% endif %}</small></dd><dd><button class="copy" type="button" data-copy="{{ site.email_praca }}">Kopiuj</button></dd></div>
+      </dl>
+      {%- if site.facebook or site.instagram %}
+      <div class="social">
+        {%- if site.facebook %}<a class="btn btn-ghost" href="{{ site.facebook }}" target="_blank" rel="noopener">Facebook</a>{% endif %}
+        {%- if site.instagram %}<a class="btn btn-ghost" href="{{ site.instagram }}" target="_blank" rel="noopener">Instagram</a>{% endif %}
+      </div>
+      {%- endif %}
+    </div>
+
+    <form class="form" id="wycena" data-mail="{{ site.email_biuro }}" novalidate>
+      <h3>Poproś o wycenę</h3>
+      <p>Cztery pola. Oddzwonimy z pytaniami i ceną.</p>
+      <div class="field">
+        <label for="f-temat">Czego dotyczy?</label>
+        <select id="f-temat">
+          <option>Instalacja elektryczna</option><option>Awaria</option><option>Inteligentny dom i automatyka</option><option>Rozdzielnica</option><option>Oświetlenie</option><option>Projekt, pomiary, przegląd, odgromy</option><option>Sieć, antena, domofon, monitoring</option><option>Coś innego</option>
+        </select>
+      </div>
+      <div class="field"><label for="f-opis">Opisz krótko, co trzeba zrobić</label><textarea id="f-opis" placeholder="Np. nowa instalacja w domu 140 m², stan surowy"></textarea></div>
+      <div class="two">
+        <div class="field"><label for="f-miejsce">Miejscowość</label><input id="f-miejsce" type="text" autocomplete="address-level2" placeholder="Wrocław"></div>
+        <div class="field"><label for="f-tel">Twój telefon</label><input id="f-tel" type="tel" autocomplete="tel" inputmode="tel" placeholder="600 000 000"></div>
+      </div>
+      <p class="err" id="f-err" hidden>Podaj numer telefonu, żebyśmy mogli oddzwonić.</p>
+      <button class="btn btn-primary" type="submit">Wyślij zapytanie</button>
+      <p class="note">Otworzy się Twoja poczta z gotową wiadomością do {{ site.email_biuro }}.</p>
+    </form>
+  </div>
+</section>
