@@ -1,7 +1,8 @@
 # Panel strony qmala.pl (Sveltia CMS; składnia zgodna z Decap CMS).
 # PRZED WDROŻENIEM: wpisz repozytorium w polu "repo". Reszta: WDROZENIE.md.
 backend:
-  name: git-gateway
+  name: github
+  repo: FabianAdrianW/Qmala-website
   branch: main
 
 site_url: https://qmala.pl
