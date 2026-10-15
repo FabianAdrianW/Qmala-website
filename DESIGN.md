@@ -3,6 +3,8 @@
 Jedyny obowiązujący opis stylu strony qmala.pl. Kod (`src/assets/style.css`, blok `:root`) musi się z nim zgadzać.
 Kolejność ważności: słowa właściciela → ten plik → gust wykonawcy. Zmiana tokenu = zmiana tu i w `:root` jednocześnie.
 
+Zmiany w wersji 9: nagłówki w Manrope (czytelniejszy, bardziej oficjalny), wszystkie wymiary w rem, a od 1440 px szerokości `html` rośnie proporcjonalnie (`clamp(100%, 1.1111vw, 300%)`), dzięki czemu strona przy pomniejszeniu zachowuje te same proporcje i marginesy. Przy powiększeniu układ przechodzi na węższy (wymóg dostępności).
+
 Zmiany w wersji 8: strona główna ze zdjęciami (hero, kafle oferty, tło kontaktu; styl w `src/assets/home.css`, pliki w `src/assets/photos/`), formularz wyceny z polem e-mail wysyłany bez otwierania poczty (Netlify Forms, formularz „wycena”).
 
 Zmiany w wersji 7: w navbarze pełne logo w wersji na jasne tło (w trybie ciemnym wersja na ciemne), panele na podstronie „Oferta” reagują na kursor jak kafle.
@@ -48,7 +50,7 @@ Zasady:
 - Odrzucone: żółty kolor akcji (#FFD21F) z wersji 1–5.
 
 ## 3. Typografia
-- Nagłówki: Bricolage Grotesque 700 (h3: 600), tracking −0,025em. Tekst: Geist 400/500/600. Fallback: Segoe UI, system-ui.
+- Nagłówki: Manrope 700 (h3: 600), tracking −0,02em, hostowany lokalnie. Tekst: Geist 400/500/600. Fallback: Segoe UI, system-ui.
 - Skala: 14 / 17 / 20 / 24 / 32–52 / 42–84 px (`--fs-0` … `--fs-5`). Nagłówek bloku na podstronie: 28–40 px. Innych rozmiarów nie dodajemy.
 - Tekst ciągły max 36–44em, interlinia 1,55. Nagłówki 0,98–1,15, `text-wrap: balance`.
 - Zwykła wielkość liter, cyfry tabelaryczne. Bez wersalików i bez wyróżniania jednego słowa w nagłówku.
