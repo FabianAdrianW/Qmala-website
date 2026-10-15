@@ -1,0 +1,61 @@
+/* Strona główna: zdjęcia w hero i na kaflach, tło sekcji kontaktu, formularz wyceny bez poczty.
+   Ładowany tylko na index (base.njk). Tokeny z style.css. */
+:root { --cyan: var(--brand-cyan); --ease: cubic-bezier(.2, .8, .2, 1); }
+
+/* hero: zdjęcie + dwa kafle w 3D */
+.hero-art { position: relative; perspective: 1400px; padding-bottom: 1.75rem; min-width: 0; }
+.hero-stack { position: relative; display: grid; gap: 1rem; transform-style: preserve-3d; transition: transform .3s var(--ease); transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); }
+.hero-photo { border-radius: var(--r-tile); overflow: hidden; aspect-ratio: 9 / 8; background: var(--night); box-shadow: 0 34px 64px -30px rgba(11, 22, 38, .55); }
+.hero-photo img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 80% 40%; }
+.float { box-shadow: 0 22px 44px -22px rgba(11, 22, 38, .5); }
+.float h3 { font-size: 1.125rem; }
+.float-b .big { display: block; font: 700 2.75rem/1 var(--font-display); color: var(--cyan); letter-spacing: -.03em; }
+@media (min-width: 56rem) {
+  .hero-stack { display: block; }
+  .tile.float { position: absolute; }
+  .float-a { right: -1rem; bottom: -1.75rem; width: min(19.5rem, 80%); transform: translateZ(90px); }
+  .float-b { left: -1.25rem; top: 1.5rem; width: 12.5rem; padding: 1.25rem; transform: translateZ(150px); }
+}
+@media (max-width: 55.99rem) and (min-width: 30rem) { .hero-stack { grid-template-columns: 1fr 1fr; } .hero-photo { grid-column: 1 / -1; } }
+@media (max-width: 55.99rem) { .hero-grid { grid-template-columns: minmax(0, 1fr); gap: var(--s-5); } }
+
+/* kafle ze zdjęciem */
+.photo { display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; isolation: isolate; background: var(--night-2); border-color: var(--night-line); color: var(--night-ink); min-height: 19rem; justify-content: flex-end; }
+.photo::before { display: none; }
+.photo > img { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease); transform: none; }
+.photo::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(to top, rgba(6, 15, 29, .95) 0%, rgba(6, 15, 29, .78) 42%, rgba(6, 15, 29, .18) 100%); }
+.photo p { color: #D5E0EE; }
+.photo .ico { background: rgba(255, 255, 255, .12); color: var(--cyan); }
+.photo .chips { margin-top: .5rem; }
+.photo .chips li { border-color: rgba(255, 255, 255, .3); background: rgba(255, 255, 255, .09); color: var(--night-ink); }
+.photo { --action: var(--brand-cyan); }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) { .photo:hover > img { transform: scale(1.04); } }
+@media (min-width: 60rem) { .photo { min-height: 23rem; } }
+.feat .photo { min-height: 21rem; background: radial-gradient(120% 80% at 80% 0%, #1B3566 0%, transparent 60%), linear-gradient(165deg, #12203A, #060F1D); }
+.feat .yr { color: var(--cyan); }
+.stretch { color: inherit; text-decoration: none; }
+.stretch::after { content: ""; position: absolute; inset: 0; z-index: 1; }
+.photo:has(.stretch:focus-visible) { outline: 3px solid var(--cyan); outline-offset: 3px; }
+@media (max-width: 62rem) { .feat { grid-template-columns: minmax(0, 1fr); } }
+
+/* kontakt: zdjęcie w tle */
+.night { position: relative; isolation: isolate; overflow: hidden; }
+.night-bg { position: absolute; inset: 0; z-index: -1; }
+.night-bg img { width: 100%; height: 100%; object-fit: cover; opacity: .62; }
+.night-bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, var(--night) 6%, rgba(6, 15, 29, .72) 50%, rgba(6, 15, 29, .55)); }
+.contact-sub { margin-top: .9rem; color: var(--night-ink-2); max-width: 30em; }
+
+/* formularz: e-mail klienta, potwierdzenie bez poczty */
+.form-body { display: grid; gap: var(--s-2); }
+.form-body[hidden], .form-done[hidden] { display: none; }
+.form .form-lead, .form-done p { color: var(--night-ink-2); }
+.form-done { display: grid; gap: var(--s-2); justify-items: start; outline: none; }
+.form-done h3 { font-size: 1.6rem; }
+.form-done .ico { display: grid; place-items: center; width: 52px; height: 52px; border-radius: 16px; background: var(--action); color: var(--action-ink); }
+.form-done .ico svg { width: 26px; height: 26px; }
+.form-done strong { color: var(--night-ink); overflow-wrap: anywhere; }
+.form-done a, .form .note a, .form .err a { color: var(--night-ink); }
+.form-done .preview { padding: .6rem .9rem; border: 1px dashed var(--night-line); border-radius: .75rem; font-size: var(--fs-0); }
+.form .btn[disabled] { opacity: .7; cursor: progress; }
+.form #f-again { width: auto; }
+.bot { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }

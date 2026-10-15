@@ -19,23 +19,20 @@ description: Zakład Elektro-Instalacyjny Wojciech Kumala. Instalacje elektryczn
       </div>
       <p class="hero-note">Wolisz od razu rozmawiać o cenie? Wyceny: <a href="{{ site.telefon_wyceny | tel }}">{{ site.telefon_wyceny }}</a></p>
     </div>
-    <div class="stack-scene">
-      <div class="stack" id="stack">
-        <div class="tile tile-night s s-a">
+    <div class="hero-art" id="hero-art">
+      <div class="hero-stack">
+        <div class="hero-photo"><img src="photos/hero.jpg" width="1100" height="981" alt="Elektryk sprawdza instalację w otwartej szafie rozdzielczej" fetchpriority="high"></div>
+        <div class="tile tile-night float float-b">
+          <span class="big">1978</span>
+          <p>Dwa pokolenia elektryków w jednym zakładzie</p>
+        </div>
+        <div class="tile tile-night float float-a">
           <h3>Zaufali nam</h3>
           <ul class="trust">
             <li>{% include "ico-check.njk" %}Politechnika Wrocławska</li>
             <li>{% include "ico-check.njk" %}Muzeum Narodowe we Wrocławiu</li>
             <li>{% include "ico-check.njk" %}Dolnośląskie Centrum Badań EIT+</li>
           </ul>
-        </div>
-        <div class="tile s s-b">
-          <b class="big">1978</b>
-          <p>Dwa pokolenia elektryków w jednym zakładzie</p>
-        </div>
-        <div class="tile s s-c">
-          <span class="lamp-row"><i></i>Wrocław i cała Polska</span>
-          <p>Projekt, montaż, pomiary</p>
         </div>
       </div>
     </div>
@@ -49,7 +46,8 @@ description: Zakład Elektro-Instalacyjny Wojciech Kumala. Instalacje elektryczn
       <p>Nie musisz szukać osobno projektanta, montera i pomiarowca. Robimy całość.</p>
     </div>
     <div class="bento">
-      <article class="tile tile-night c-7">
+      <article class="tile photo c-7">
+        <img src="photos/pomiary.jpg" alt="" width="1500" height="837" loading="lazy">
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg></span>
         <h3>Instalacje elektryczne</h3>
         <p>Nowe instalacje i modernizacje. Przyjeżdżamy też do awarii.</p>
@@ -66,12 +64,14 @@ description: Zakład Elektro-Instalacyjny Wojciech Kumala. Instalacje elektryczn
         <h3>Rozdzielnice</h3>
         <ul class="chips"><li>Rozdzielnie elektryczne</li><li>Kompletacja i montaż rozdzielnic nn</li></ul>
       </article>
-      <article class="tile c-4">
+      <article class="tile photo c-4">
+        <img src="photos/budynek.jpg" alt="" width="1500" height="837" loading="lazy" style="object-position:50% 35%">
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 18h5M10.5 21h3M12 3a6 6 0 0 0-4 10.5c.7.7 1.1 1.5 1.1 2.5h5.8c0-1 .4-1.8 1.1-2.5A6 6 0 0 0 12 3z"/></svg></span>
         <h3>Oświetlenie</h3>
         <ul class="chips"><li>Dekoracyjne i użytkowe</li><li>Iluminacje elewacji</li><li>Pomiary natężenia</li></ul>
       </article>
-      <article class="tile c-4">
+      <article class="tile photo c-4">
+        <img src="photos/biuro.jpg" alt="" width="1500" height="837" loading="lazy">
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 16a8 8 0 1 1 16 0"/><path d="M12 16l4-5.5"/><circle cx="12" cy="16" r="1.3" fill="currentColor"/></svg></span>
         <h3>Projekty i pomiary</h3>
         <ul class="chips"><li>Projekty elektryczne</li><li>Pomiary elektryczne</li><li>Przeglądy okresowe</li><li>Instalacje odgromowe</li></ul>
@@ -105,7 +105,7 @@ description: Zakład Elektro-Instalacyjny Wojciech Kumala. Instalacje elektryczn
     {%- if duze.length %}
     <div class="feat">
       {%- for r in duze %}
-      <article class="tile tile-night"><span class="yr">{{ r.data.znak }}</span><div><h3>{{ r.data.title }}</h3>{% if r.data.opis %}<p>{{ r.data.opis }}</p>{% endif %}</div></article>
+      <article class="tile photo">{% if r.data.foto.length %}<img src="{{ r.data.foto[0].thumb }}" referrerpolicy="no-referrer" alt="" width="{{ r.data.foto[0].w }}" height="{{ r.data.foto[0].h }}" loading="lazy" onerror="this.remove()">{% endif %}<span class="yr">{{ r.data.znak }}</span><div><h3><a class="stretch" href="realizacje.html#{{ r.fileSlug }}">{{ r.data.title }}</a></h3>{% if r.data.opis %}<p>{{ r.data.opis }}</p>{% endif %}</div></article>
       {%- endfor %}
     </div>
     {%- endif %}
@@ -143,10 +143,12 @@ description: Zakład Elektro-Instalacyjny Wojciech Kumala. Instalacje elektryczn
 </section>
 
 <section class="sec night" id="kontakt">
+  <div class="night-bg" aria-hidden="true"><img src="photos/budynek.jpg" alt="" width="1500" height="837" loading="lazy"></div>
   <div class="wrap contact-grid">
     <div>
       <h2>Zadzwoń i powiedz, co trzeba zrobić</h2>
       <a class="bigtel" href="{{ site.telefon | tel }}">{{ site.telefon }}</a>
+      <p class="contact-sub">Oddzwonimy z pytaniami i ceną. Pracujemy we Wrocławiu i całej Polsce.</p>
       <dl class="lines">
         <div class="line"><dt>Wyceny</dt><dd><a href="{{ site.telefon_wyceny | tel }}">{{ site.telefon_wyceny }}</a><small>{{ site.osoba_wyceny }}{% if site.email_wyceny %}, <a href="mailto:{{ site.email_wyceny }}">{{ site.email_wyceny }}</a>{% endif %}</small></dd><dd><button class="copy" type="button" data-copy="{{ site.telefon_wyceny | digits }}">Kopiuj</button></dd></div>
         <div class="line"><dt>Biuro</dt><dd><a href="mailto:{{ site.email_biuro }}">{{ site.email_biuro }}</a></dd><dd><button class="copy" type="button" data-copy="{{ site.email_biuro }}">Kopiuj</button></dd></div>
@@ -160,23 +162,31 @@ description: Zakład Elektro-Instalacyjny Wojciech Kumala. Instalacje elektryczn
       {%- endif %}
     </div>
 
-    <form class="form" id="wycena" data-mail="{{ site.email_biuro }}" novalidate>
-      <h3>Poproś o wycenę</h3>
-      <p>Cztery pola. Oddzwonimy z pytaniami i ceną.</p>
-      <div class="field">
-        <label for="f-temat">Czego dotyczy?</label>
-        <select id="f-temat">
-          <option>Instalacja elektryczna</option><option>Awaria</option><option>Inteligentny dom i automatyka</option><option>Rozdzielnica</option><option>Oświetlenie</option><option>Projekt, pomiary, przegląd, odgromy</option><option>Sieć, antena, domofon, monitoring</option><option>Coś innego</option>
-        </select>
+    <form class="form" id="wycena" name="wycena" data-mail="{{ site.email_biuro }}" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+      <input type="hidden" name="form-name" value="wycena">
+      <div class="form-body">
+        <h3>Poproś o wycenę</h3>
+        <p class="form-lead">Napisz, co trzeba zrobić. Wystarczy e-mail albo telefon.</p>
+        <div class="field"><label for="f-temat">Czego dotyczy?</label>
+          <select id="f-temat" name="temat"><option>Instalacja elektryczna</option><option>Awaria</option><option>Inteligentny dom i automatyka</option><option>Rozdzielnica</option><option>Oświetlenie</option><option>Projekt, pomiary, przegląd, odgromy</option><option>Sieć, antena, domofon, monitoring</option><option>Coś innego</option></select></div>
+        <div class="field"><label for="f-opis">Opisz krótko, co trzeba zrobić</label><textarea id="f-opis" name="opis" placeholder="Np. nowa instalacja w domu 140 m², stan surowy, Wrocław"></textarea></div>
+        <div class="two">
+          <div class="field"><label for="f-email">Twój e-mail</label><input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="nazwa@domena.pl" aria-describedby="f-err"></div>
+          <div class="field"><label for="f-tel">Albo telefon</label><input id="f-tel" name="telefon" type="tel" autocomplete="tel" inputmode="tel" placeholder="600 000 000" aria-describedby="f-err"></div>
+        </div>
+        <p class="err" id="f-err" role="alert" hidden></p>
+        <p class="bot" aria-hidden="true"><label>Nie wypełniaj tego pola: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+        <button class="btn btn-primary" type="submit" id="f-send">Wyślij zapytanie</button>
+        <p class="note">Wyślemy to od razu, bez otwierania poczty. Dane wykorzystamy tylko do odpowiedzi na zapytanie.</p>
       </div>
-      <div class="field"><label for="f-opis">Opisz krótko, co trzeba zrobić</label><textarea id="f-opis" placeholder="Np. nowa instalacja w domu 140 m², stan surowy"></textarea></div>
-      <div class="two">
-        <div class="field"><label for="f-miejsce">Miejscowość</label><input id="f-miejsce" type="text" autocomplete="address-level2" placeholder="Wrocław"></div>
-        <div class="field"><label for="f-tel">Twój telefon</label><input id="f-tel" type="tel" autocomplete="tel" inputmode="tel" placeholder="600 000 000"></div>
+      <div class="form-done" id="f-done" tabindex="-1" hidden>
+        <span class="ico">{% include "ico-check.njk" %}</span>
+        <h3>Wiadomość wysłana</h3>
+        <p id="f-done-p"></p>
+        <p class="preview" id="f-prev" hidden>Tryb podglądu: wiadomość nie została nigdzie wysłana.</p>
+        <p>Pilna sprawa? <a href="{{ site.telefon | tel }}">Zadzwoń: {{ site.telefon }}</a></p>
+        <button class="btn btn-ghost" type="button" id="f-again">Wyślij kolejne zapytanie</button>
       </div>
-      <p class="err" id="f-err" hidden>Podaj numer telefonu, żebyśmy mogli oddzwonić.</p>
-      <button class="btn btn-primary" type="submit">Wyślij zapytanie</button>
-      <p class="note">Otworzy się Twoja poczta z gotową wiadomością do {{ site.email_biuro }}.</p>
     </form>
   </div>
 </section>

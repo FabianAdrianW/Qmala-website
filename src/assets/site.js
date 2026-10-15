@@ -28,7 +28,7 @@
   }
 
   /* kafle: pochylenie 3D i światło za kursorem */
-  if (fine && !calm) [].forEach.call(document.querySelectorAll('.tile:not(.s)'), function (t) {
+  if (fine && !calm) [].forEach.call(document.querySelectorAll('.tile:not(.s):not(.float)'), function (t) {
     t.addEventListener('pointermove', function (e) {
       var r = t.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
       var k = Math.min(1, 420 / r.width);
@@ -54,16 +54,60 @@
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(done, fallback); else fallback();
   });
 
-  /* formularz → gotowy e-mail (bez serwera). Adres pochodzi z atrybutu data-mail. */
-  var form = document.getElementById('wycena'), err = document.getElementById('f-err');
-  if (form) form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var v = function (id) { return document.getElementById(id).value.trim(); };
-    if (v('f-tel').replace(/\D/g, '').length < 9) { err.hidden = false; document.getElementById('f-tel').focus(); return; }
-    err.hidden = true;
-    var body = 'Temat: ' + v('f-temat') + '\n\n' + (v('f-opis') || '(bez opisu)') + '\n\nMiejscowość: ' + (v('f-miejsce') || '-') + '\nTelefon: ' + v('f-tel');
-    location.href = 'mailto:' + form.dataset.mail + '?subject=' + encodeURIComponent('Zapytanie o wycenę: ' + v('f-temat')) + '&body=' + encodeURIComponent(body);
-  });
+  /* formularz wyceny: wysyłka bez otwierania poczty (Netlify Forms), potwierdzenie z adresem klienta */
+  (function () {
+    var form = document.getElementById('wycena'); if (!form) return;
+    var body = form.querySelector('.form-body'), done = document.getElementById('f-done'), err = document.getElementById('f-err'),
+        send = document.getElementById('f-send'), email = document.getElementById('f-email'), tel = document.getElementById('f-tel'),
+        temat = document.getElementById('f-temat'), opis = document.getElementById('f-opis');
+    // Na qmala.pl i *.netlify.app formularz wysyła się naprawdę. Gdzie indziej (plik, podgląd) to makieta.
+    var live = /(^|\.)qmala\.pl$|\.netlify\.app$/.test(location.hostname);
+    function showErr(text, field, link) {
+      err.textContent = text;
+      if (link) { err.appendChild(document.createTextNode(' ')); var a = document.createElement('a'); a.href = link.href; a.textContent = link.text; err.appendChild(a); }
+      err.hidden = false;
+      if (field) { field.setAttribute('aria-invalid', 'true'); field.focus(); }
+    }
+    function strong(s) { var n = document.createElement('strong'); n.textContent = s; return n; }
+    function showDone(em, ph) {
+      var p = document.getElementById('f-done-p'); p.textContent = '';
+      if (em) {
+        p.appendChild(document.createTextNode('Dostaliśmy Twoje zapytanie z adresu ')); p.appendChild(strong(em)); p.appendChild(document.createTextNode('. Odpiszemy na ten adres.'));
+        if (ph) { p.appendChild(document.createTextNode(' Możemy też zadzwonić na ')); p.appendChild(strong(ph)); p.appendChild(document.createTextNode('.')); }
+      } else { p.appendChild(document.createTextNode('Dostaliśmy Twoje zapytanie. Oddzwonimy na numer ')); p.appendChild(strong(ph)); p.appendChild(document.createTextNode('.')); }
+      document.getElementById('f-prev').hidden = live;
+      body.hidden = true; done.hidden = false; done.focus();
+    }
+    document.getElementById('f-again').addEventListener('click', function () { form.reset(); done.hidden = true; body.hidden = false; temat.focus(); });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      err.hidden = true; email.removeAttribute('aria-invalid'); tel.removeAttribute('aria-invalid');
+      var em = email.value.trim(), ph = tel.value.trim();
+      if (!em && !ph) return showErr('Podaj e-mail albo telefon, żebyśmy mogli odpowiedzieć.', email);
+      if (em && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)) return showErr('Sprawdź adres e-mail. Powinien wyglądać tak: nazwa@domena.pl.', email);
+      if (!em && ph.replace(/\D/g, '').length < 9) return showErr('Numer telefonu jest za krótki. Podaj co najmniej 9 cyfr.', tel);
+      send.disabled = true; send.textContent = 'Wysyłam…';
+      var req = live
+        ? fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); })
+        : new Promise(function (r) { setTimeout(r, 900); });
+      req.then(function () { showDone(em, ph); }, function () {
+        var txt = ['Temat: ' + temat.value, 'Opis: ' + (opis.value.trim() || '-'), 'E-mail: ' + (em || '-'), 'Telefon: ' + (ph || '-')].join('\n');
+        showErr('Nie udało się wysłać. Wpisane dane zostały w formularzu. Spróbuj jeszcze raz albo zadzwoń.', null,
+          { href: 'mailto:' + (form.dataset.mail || '') + '?subject=' + encodeURIComponent('Zapytanie o wycenę: ' + temat.value) + '&body=' + encodeURIComponent(txt), text: 'Napisz z własnej poczty.' });
+      }).then(function () { send.disabled = false; send.textContent = 'Wyślij zapytanie'; });
+    });
+  })();
+
+  /* HERO ze zdjęciem: lekkie pochylenie za kursorem (tylko mysz, bez reduced motion) */
+  (function () {
+    var art = document.getElementById('hero-art'); if (!art || calm || !fine) return;
+    var st = art.querySelector('.hero-stack');
+    art.addEventListener('pointermove', function (e) {
+      var r = art.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5;
+      st.style.setProperty('--ry', (x * 8).toFixed(2) + 'deg'); st.style.setProperty('--rx', (-y * 6).toFixed(2) + 'deg');
+    });
+    art.addEventListener('pointerleave', function () { st.style.setProperty('--rx', '0deg'); st.style.setProperty('--ry', '0deg'); });
+  })();
 
   /* HERO: stos kafli w 3D, lekko podąża za kursorem */
   (function () {

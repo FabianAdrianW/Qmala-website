@@ -3,6 +3,8 @@
 Jedyny obowiązujący opis stylu strony qmala.pl. Kod (`src/assets/style.css`, blok `:root`) musi się z nim zgadzać.
 Kolejność ważności: słowa właściciela → ten plik → gust wykonawcy. Zmiana tokenu = zmiana tu i w `:root` jednocześnie.
 
+Zmiany w wersji 8: strona główna ze zdjęciami (hero, kafle oferty, tło kontaktu; styl w `src/assets/home.css`, pliki w `src/assets/photos/`), formularz wyceny z polem e-mail wysyłany bez otwierania poczty (Netlify Forms, formularz „wycena”).
+
 Zmiany w wersji 7: w navbarze pełne logo w wersji na jasne tło (w trybie ciemnym wersja na ciemne), panele na podstronie „Oferta” reagują na kursor jak kafle.
 
 Zmiany w wersji 6: kolory i znak z logo QMALA.PL (pełny opis marki: `BRAND.md`), akcja niebieska/cyjanowa zamiast żółtej, logo w navbarze i stopce, favicon.
