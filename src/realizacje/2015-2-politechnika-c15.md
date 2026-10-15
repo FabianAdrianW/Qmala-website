@@ -4,6 +4,7 @@ rok: 2015
 opis: "Zaplecze badawcze Politechniki Wrocławskiej."
 wyrozniona: true
 zdjecia:
+  - /uploads/politechnika-c15.jpg
   - https://qmala.pl/images/85.jpg
   - https://qmala.pl/images/86.jpg
   - https://qmala.pl/images/87.jpg
