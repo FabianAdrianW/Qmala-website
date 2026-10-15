@@ -32,13 +32,54 @@
   if (fine && !calm) [].forEach.call(document.querySelectorAll('.tile:not(.s):not(.float)'), function (t) {
     t.addEventListener('pointermove', function (e) {
       var r = t.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
-      var k = Math.min(1, 420 / r.width);
-      if (!homePage) { t.style.setProperty('--ry', ((x - .5) * 9 * k).toFixed(2) + 'deg'); t.style.setProperty('--rx', ((.5 - y) * 9 * k).toFixed(2) + 'deg'); }
+      var k = Math.min(1, 420 / r.width) * (homePage ? .45 : 1); /* na stronie głównej pochylenie jest łagodniejsze (max ok. 4°) */
+      t.style.setProperty('--ry', ((x - .5) * 9 * k).toFixed(2) + 'deg'); t.style.setProperty('--rx', ((.5 - y) * 9 * k).toFixed(2) + 'deg');
       t.style.setProperty('--mx', (x * 100).toFixed(1) + '%'); t.style.setProperty('--my', (y * 100).toFixed(1) + '%');
       t.classList.add('is-live');
     });
     t.addEventListener('pointerleave', function () { t.classList.remove('is-live'); t.style.setProperty('--rx', '0deg'); t.style.setProperty('--ry', '0deg'); });
   });
+
+  /* STRONA GŁÓWNA: pas realizacji (strzałki) i paralaksa zdjęć */
+  (function () {
+    if (!homePage) return;
+    var strip = document.getElementById('strip');
+    if (strip) {
+      var ctl = document.querySelector('.strip-ctl');
+      if (ctl) {
+        ctl.hidden = false; /* bez JS pas i tak przewija się palcem i klawiaturą, strzałki są dodatkiem */
+        var prev = ctl.querySelector('[data-dir="-1"]'), next = ctl.querySelector('[data-dir="1"]');
+        var sync = function () {
+          var max = strip.scrollWidth - strip.clientWidth;
+          prev.disabled = strip.scrollLeft <= 2; next.disabled = strip.scrollLeft >= max - 2;
+        };
+        ctl.addEventListener('click', function (e) {
+          var b = e.target.closest('button'); if (!b) return;
+          var card = strip.querySelector('.tile'), step = card ? card.getBoundingClientRect().width + parseFloat(getComputedStyle(strip).columnGap || 0) : strip.clientWidth * .8;
+          strip.scrollBy({ left: step * Number(b.dataset.dir), behavior: calm ? 'auto' : 'smooth' });
+        });
+        strip.addEventListener('scroll', function () { requestAnimationFrame(sync); }, { passive: true });
+        addEventListener('resize', sync);
+        sync();
+      }
+    }
+    if (calm) return;
+    var imgs = [].slice.call(document.querySelectorAll('.home .photo > img, .home .firm-pic img'));
+    var busy = false;
+    function frame() {
+      busy = false;
+      var vh = innerHeight;
+      imgs.forEach(function (img) {
+        var box = img.parentNode, r = box.getBoundingClientRect();
+        if (!box.isConnected || r.bottom < -50 || r.top > vh + 50) return;
+        var p = Math.max(-1, Math.min(1, (r.top + r.height / 2 - vh / 2) / vh));
+        img.style.setProperty('--py', (-p * r.height * .05).toFixed(1) + 'px'); /* zapas obrazu to 6% wysokości z każdej strony */
+      });
+    }
+    addEventListener('scroll', function () { if (!busy) { busy = true; requestAnimationFrame(frame); } }, { passive: true });
+    addEventListener('resize', frame);
+    frame();
+  })();
 
   /* kopiowanie */
   document.addEventListener('click', function (e) {

@@ -201,11 +201,6 @@ h3 { font-size: var(--fs-3); line-height: 1.15; font-weight: 600; letter-spacing
 @media (max-width: 38.75em) { .bento > * { grid-column: span 12 !important; } }
 
 /* REALIZACJE */
-.feat { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-2); }
-.feat .tile { min-height: 15.625rem; align-content: space-between; }
-.feat .yr { font: 600 var(--fs-0)/1 var(--font-body); color: var(--action); }
-.feat h3 { font-size: clamp(1.4rem, 2.2vw, 1.85rem); font-weight: 700; }
-@media (max-width: 56.25em) { .feat { grid-template-columns: minmax(0, 1fr); } .feat .tile { min-height: 0; gap: var(--s-4); } }
 .works { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 var(--s-5); margin-top: var(--s-5); }
 .works li { display: grid; grid-template-columns: 3.4rem minmax(0, 1fr); gap: var(--s-2); padding-block: 0.875rem; border-top: 1px solid var(--line); }
 .works b { color: var(--ink-2); font-weight: 500; overflow-wrap: anywhere; }

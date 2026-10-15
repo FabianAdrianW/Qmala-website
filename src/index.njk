@@ -39,14 +39,14 @@ description: Zakład Elektro-Instalacyjny Wojciech Kumala. Instalacje elektryczn
   </div>
 </section>
 
-<section class="sec" id="oferta" style="padding-top:0">
+<section class="sec" id="oferta">
   <div class="wrap">
-    <div class="sec-head">
+    <div class="sec-head sec-split">
       <h2>Jedna ekipa od przyłącza po pomiary</h2>
       <p>Nie musisz szukać osobno projektanta, montera i pomiarowca. Robimy całość.</p>
     </div>
     <div class="bento">
-      <article class="tile photo c-7">
+      <article class="tile photo c-7 bleed-l">
         
         <img src="photos/pomiary.jpg" alt="" width="1100" height="614" loading="lazy">
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2.5"/><path d="M8.5 8v4M12 8v4M15.5 8v4M8 16.5h8"/></svg></span><h3>Rozdzielnice</h3>
@@ -65,14 +65,14 @@ description: Zakład Elektro-Instalacyjny Wojciech Kumala. Instalacje elektryczn
         <p>Światło, rolety i ogrzewanie sterowane z jednego miejsca.</p>
         <ul class="chips"><li>System LCN</li><li>Automatyka i sterowanie</li></ul>
       </article>
-      <article class="tile photo c-8">
+      <article class="tile photo c-8 bleed-r">
         <img src="photos/budynek.jpg" alt="" width="1500" height="837" loading="lazy" style="object-position:50% 35%">
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 18h5M10.5 21h3M12 3a6 6 0 0 0-4 10.5c.7.7 1.1 1.5 1.1 2.5h5.8c0-1 .4-1.8 1.1-2.5A6 6 0 0 0 12 3z"/></svg></span>
         <h3>Oświetlenie i iluminacje</h3>
         <p>Wnętrza, elewacje i tereny zewnętrzne.</p>
         <ul class="chips"><li>Dekoracyjne i użytkowe</li><li>Iluminacje elewacji</li><li>Pomiary natężenia</li></ul>
       </article>
-      <article class="tile photo c-7">
+      <article class="tile photo c-7 bleed-l">
         <img src="photos/biuro.jpg" alt="" width="1500" height="837" loading="lazy">
         <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 16a8 8 0 1 1 16 0"/><path d="M12 16l4-5.5"/><circle cx="12" cy="16" r="1.3" fill="currentColor"/></svg></span>
         <h3>Projekty, pomiary i odgromy</h3>
@@ -94,24 +94,34 @@ description: Zakład Elektro-Instalacyjny Wojciech Kumala. Instalacje elektryczn
   </div>
 </section>
 
-<section class="sec" id="realizacje" style="padding-top:0">
+<section class="sec" id="realizacje">
+  {#- trzy pierwsze realizacje oznaczone w panelu jako wyróżnione → duże kafle, reszta → lista -#}
+  {%- set duze = [] %}{% set reszta = [] %}
+  {%- for r in collections.realizacje %}
+    {%- if r.data.wyrozniona and duze.length < 3 %}{% set _ = duze.push(r) %}{% else %}{% set _ = reszta.push(r) %}{% endif %}
+  {%- endfor %}
   <div class="wrap">
-    <div class="sec-head">
+    <div class="sec-head sec-split">
       <h2>Zaufały nam uczelnie, muzeum i deweloperzy</h2>
-      <p>Wybrane obiekty z Wrocławia i okolic.</p>
+      <div class="head-side">
+        <p>Wybrane obiekty z Wrocławia i okolic.</p>
+        {%- if duze.length > 1 %}
+        <div class="strip-ctl" hidden>
+          <button type="button" class="round" data-dir="-1" aria-controls="strip" aria-label="Poprzednie realizacje">{% include "ico-chev.njk" %}</button>
+          <button type="button" class="round" data-dir="1" aria-controls="strip" aria-label="Następne realizacje">{% include "ico-chev.njk" %}</button>
+        </div>
+        {%- endif %}
+      </div>
     </div>
-    {#- trzy pierwsze realizacje oznaczone w panelu jako wyróżnione → duże kafle, reszta → lista -#}
-    {%- set duze = [] %}{% set reszta = [] %}
-    {%- for r in collections.realizacje %}
-      {%- if r.data.wyrozniona and duze.length < 3 %}{% set _ = duze.push(r) %}{% else %}{% set _ = reszta.push(r) %}{% endif %}
+  </div>
+  {%- if duze.length %}
+  <div class="strip" id="strip" role="region" aria-label="Wyróżnione realizacje" tabindex="0">
+    {%- for r in duze %}
+    <article class="tile photo">{% if r.data.foto.length %}<img src="{{ r.data.foto[0].thumb }}" referrerpolicy="no-referrer" alt="" width="{{ r.data.foto[0].w }}" height="{{ r.data.foto[0].h }}" loading="lazy" decoding="async" onerror="this.remove()">{% endif %}<span class="yr">{{ r.data.znak }}</span><div><h3><a class="stretch" href="realizacje.html#{{ r.fileSlug }}">{{ r.data.title }}</a></h3>{% if r.data.opis %}<p>{{ r.data.opis }}</p>{% endif %}</div></article>
     {%- endfor %}
-    {%- if duze.length %}
-    <div class="feat">
-      {%- for r in duze %}
-      <article class="tile photo">{% if r.data.foto.length %}<img src="{{ r.data.foto[0].thumb }}" referrerpolicy="no-referrer" alt="" width="{{ r.data.foto[0].w }}" height="{{ r.data.foto[0].h }}" loading="lazy" onerror="this.remove()">{% endif %}<span class="yr">{{ r.data.znak }}</span><div><h3><a class="stretch" href="realizacje.html#{{ r.fileSlug }}">{{ r.data.title }}</a></h3>{% if r.data.opis %}<p>{{ r.data.opis }}</p>{% endif %}</div></article>
-      {%- endfor %}
-    </div>
-    {%- endif %}
+  </div>
+  {%- endif %}
+  <div class="wrap">
     <ul class="works">
       {%- for r in reszta %}
       <li><b>{{ r.data.znak }}</b><div><strong>{{ r.data.title }}</strong>{% if r.data.opis %}<span>{{ r.data.opis }}</span>{% endif %}</div></li>
@@ -127,21 +137,36 @@ description: Zakład Elektro-Instalacyjny Wojciech Kumala. Instalacje elektryczn
   </div>
 </section>
 
-<section class="sec firm" id="firma" style="padding-top:0">
+{#- pas z nazwami obiektów: generowany z realizacji (panel), więc zawsze prawdziwy -#}
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    {%- for k in [1, 2] %}
+    <ul>
+      {%- for r in collections.realizacje %}<li>{{ r.data.title }}</li>{% endfor %}
+    </ul>
+    {%- endfor %}
+  </div>
+</div>
+
+<section class="sec firm" id="firma">
   <div class="wrap">
-    <div class="firm-grid">
+    <div class="firm-card bleed-l">
+      <div class="firm-pic" aria-hidden="true">
+        <img src="photos/biuro.jpg" alt="" width="1100" height="614" loading="lazy" decoding="async">
+        <span class="firm-badge">Od 1978</span>
+      </div>
       <div class="firm-copy">
         <h2>Dwa pokolenia, jeden zakład</h2>
         <p class="lede">Zakład założył w 1978 roku Mirosław Kumala. Od 1999 roku pracuje w nim jego syn, Wojciech.</p>
         <p>Dzwoniąc do nas, rozmawiasz z ludźmi, którzy wyceniają robotę i za nią odpowiadają. Mamy uprawnienia, wieloletnią praktykę i pisemne <a href="referencje.html">referencje od klientów</a>.</p>
         <div class="more"><a class="btn btn-ghost" href="o-firmie.html">Poznaj firmę i sposób pracy</a></div>
       </div>
-      <ol class="timeline">
-        <li><b>1978</b><span>Mirosław Kumala zakłada zakład elektroinstalacyjny we Wrocławiu.</span></li>
-        <li><b>1999</b><span>Do firmy dołącza syn, Wojciech Kumala.</span></li>
-        <li><b>2011–2015</b><span>Instalacje dla Politechniki Wrocławskiej, Muzeum Narodowego i centrum badawczego EIT+.</span></li>
-      </ol>
     </div>
+    <ol class="steps">
+      <li class="step step-night"><b>1978</b><span>Mirosław Kumala zakłada zakład elektroinstalacyjny we Wrocławiu.</span></li>
+      <li class="step"><b>1999</b><span>Do firmy dołącza syn, Wojciech Kumala.</span></li>
+      <li class="step"><b>2011–2015</b><span>Instalacje dla Politechniki Wrocławskiej, Muzeum Narodowego i centrum badawczego EIT+.</span></li>
+    </ol>
   </div>
 </section>
 
