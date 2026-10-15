@@ -32,7 +32,7 @@
   .hero-actions .btn-ghost { background: color-mix(in srgb, var(--bg) 72%, transparent); }
   .hero-copy .lede { color: color-mix(in srgb, var(--ink) 74%, var(--ink-2)); }
   .hero-photo img { object-position: 68% 22%; filter: saturate(.55) contrast(.95); }
-  .hero-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, color-mix(in srgb, var(--bg) 66%, transparent) 0, color-mix(in srgb, var(--bg) 74%, transparent) 60%, var(--bg) 100%); }
+  .hero-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, color-mix(in srgb, var(--bg) 56%, transparent) 0, color-mix(in srgb, var(--bg) 64%, transparent) 60%, var(--bg) 100%); }
 }
 
 /* kafle ze zdjęciem */
@@ -68,7 +68,6 @@
 .form-done .ico svg { width: 1.625rem; height: 1.625rem; }
 .form-done strong { color: var(--night-ink); overflow-wrap: anywhere; }
 .form-done a, .form .note a, .form .err a { color: var(--night-ink); }
-.form-done .preview { padding: .6rem .9rem; border: 1px dashed var(--night-line); border-radius: .75rem; font-size: var(--fs-0); }
 .form .btn[disabled] { opacity: .7; cursor: progress; }
 .form #f-again { width: auto; }
 .bot { position: absolute; left: -624.9375rem; width: 1px; height: 1px; overflow: hidden; }

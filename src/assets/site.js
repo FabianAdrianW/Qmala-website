@@ -102,8 +102,9 @@
     var body = form.querySelector('.form-body'), done = document.getElementById('f-done'), err = document.getElementById('f-err'),
         send = document.getElementById('f-send'), email = document.getElementById('f-email'), tel = document.getElementById('f-tel'),
         temat = document.getElementById('f-temat'), opis = document.getElementById('f-opis');
-    // Na qmala.pl i *.netlify.app formularz wysyła się naprawdę. Gdzie indziej (plik, podgląd) to makieta.
-    var live = /(^|\.)qmala\.pl$|\.netlify\.app$/.test(location.hostname);
+    // Na stronie w sieci (qmala.pl, podgląd Netlify, każdy adres http/https) formularz idzie na ten sam adres.
+    // Z pliku lokalnego i z localhost idzie na qmala.pl (odpowiedź jest wtedy nieprzejrzysta, więc o sukcesie decyduje samo dotarcie żądania).
+    var here = /^https?:$/.test(location.protocol) && !/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
     function showErr(text, field, link) {
       err.textContent = text;
       if (link) { err.appendChild(document.createTextNode(' ')); var a = document.createElement('a'); a.href = link.href; a.textContent = link.text; err.appendChild(a); }
@@ -117,7 +118,6 @@
         p.appendChild(document.createTextNode('Dostaliśmy Twoje zapytanie z adresu ')); p.appendChild(strong(em)); p.appendChild(document.createTextNode('. Odpiszemy na ten adres.'));
         if (ph) { p.appendChild(document.createTextNode(' Możemy też zadzwonić na ')); p.appendChild(strong(ph)); p.appendChild(document.createTextNode('.')); }
       } else { p.appendChild(document.createTextNode('Dostaliśmy Twoje zapytanie. Oddzwonimy na numer ')); p.appendChild(strong(ph)); p.appendChild(document.createTextNode('.')); }
-      document.getElementById('f-prev').hidden = live;
       body.hidden = true; done.hidden = false; done.focus();
     }
     document.getElementById('f-again').addEventListener('click', function () { form.reset(); done.hidden = true; body.hidden = false; temat.focus(); });
@@ -129,9 +129,8 @@
       if (em && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)) return showErr('Sprawdź adres e-mail. Powinien wyglądać tak: nazwa@domena.pl.', email);
       if (!em && ph.replace(/\D/g, '').length < 9) return showErr('Numer telefonu jest za krótki. Podaj co najmniej 9 cyfr.', tel);
       send.disabled = true; send.textContent = 'Wysyłam…';
-      var req = live
-        ? fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() }).then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); })
-        : new Promise(function (r) { setTimeout(r, 900); });
+      var req = fetch(here ? '/' : 'https://qmala.pl/', { method: 'POST', mode: here ? 'same-origin' : 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() })
+        .then(function (r) { if (here && !r.ok) throw new Error('HTTP ' + r.status); });
       req.then(function () { showDone(em, ph); }, function () {
         var txt = ['Temat: ' + temat.value, 'Opis: ' + (opis.value.trim() || '-'), 'E-mail: ' + (em || '-'), 'Telefon: ' + (ph || '-')].join('\n');
         showErr('Nie udało się wysłać. Wpisane dane zostały w formularzu. Spróbuj jeszcze raz albo zadzwoń.', null,
