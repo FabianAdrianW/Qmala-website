@@ -28,12 +28,12 @@
   }
 
   /* kafle: pochylenie 3D i światło za kursorem */
+  var homePage = document.body.classList.contains('home');
   if (fine && !calm) [].forEach.call(document.querySelectorAll('.tile:not(.s):not(.float)'), function (t) {
     t.addEventListener('pointermove', function (e) {
       var r = t.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
       var k = Math.min(1, 420 / r.width);
-      t.style.setProperty('--ry', ((x - .5) * 9 * k).toFixed(2) + 'deg');
-      t.style.setProperty('--rx', ((.5 - y) * 9 * k).toFixed(2) + 'deg');
+      if (!homePage) { t.style.setProperty('--ry', ((x - .5) * 9 * k).toFixed(2) + 'deg'); t.style.setProperty('--rx', ((.5 - y) * 9 * k).toFixed(2) + 'deg'); }
       t.style.setProperty('--mx', (x * 100).toFixed(1) + '%'); t.style.setProperty('--my', (y * 100).toFixed(1) + '%');
       t.classList.add('is-live');
     });
