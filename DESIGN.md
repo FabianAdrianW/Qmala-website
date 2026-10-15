@@ -1,9 +1,20 @@
-# Qmala — DESIGN.md (źródło prawdy UI), wersja 7
+# Qmala — DESIGN.md (źródło prawdy UI), wersja 11
 
 Jedyny obowiązujący opis stylu strony qmala.pl. Kod (`src/assets/style.css`, blok `:root`) musi się z nim zgadzać.
 Kolejność ważności: słowa właściciela → ten plik → gust wykonawcy. Zmiana tokenu = zmiana tu i w `:root` jednocześnie.
 
-Zmiany w wersji 9: nagłówki w Manrope (czytelniejszy, bardziej oficjalny), wszystkie wymiary w rem, a od 1440 px szerokości `html` rośnie proporcjonalnie (`clamp(100%, 1.1111vw, 300%)`), dzięki czemu strona przy pomniejszeniu zachowuje te same proporcje i marginesy. Przy powiększeniu układ przechodzi na węższy (wymóg dostępności).
+Zmiany w wersji 11: nagłówki w Newsreader (antykwa o większej gracji, nadal bardzo czytelna) zamiast Manrope. Tokeny `--font-display`, `--fw-display` (600) i `--ls-display` (−0,012em) w `style.css`; liczby w nagłówkach z cyframi pełnowymiarowymi i proporcjonalnymi. Małe etykiety (rok na kafelku, plakietka „Od 1978”, chipy, przyciski) zostają w Geist, bo w małych rozmiarach antykwa tracona na czytelności. Plik czcionki: `src/assets/fonts/newsreader-*.woff2` (licencja OFL w `LICENSE-Newsreader.txt`).
+
+Zmiany w wersji 10 (rytm strony głównej, styl w `src/assets/home.css`, skrypt w `src/assets/site.js`):
+- Margines boczny nie jest już jednakowy w każdej sekcji. Zmienna `--bleed` (odległość od kolumny treści do krawędzi okna, liczona w rem) pozwala kaflom wychodzić poza kolumnę: klasy `.bleed-l` i `.bleed-r`. Tekst w takim kafelku zostaje na linii siatki (dopełnienie o `--bleed`). Od 56 rem w górę; poniżej wszystko w jednej kolumnie bez wychodzenia.
+- Oferta: zygzak. Rozdzielnice (lewa krawędź okna), Oświetlenie (prawa), Projekty i pomiary (lewa). Nagłówek sekcji w dwóch kolumnach (`.sec-split`).
+- Realizacje: trzy wyróżnione kafle w poziomym pasie (`.strip`), zaczynają się na linii siatki i wychodzą poza prawy margines, drugi i trzeci są przesunięte w dół. Strzałki (dodaje je skrypt) przewijają pas; bez skryptu pas przewija się palcem, klawiaturą i Shift + kółko. Brak zdjęcia = blady znak Q na granatowym tle (nie goły gradient).
+- Pas nazw obiektów (`.marquee`) między Realizacjami a Firmą: tytuły wszystkich realizacji z panelu, więc zawsze prawdziwe. Wolny przewijany pas, zatrzymuje się po najechaniu, przy ograniczonym ruchu go nie ma.
+- Firma: biała plansza zastąpiona kafelem wychodzącym poza lewy margines (zdjęcie + tekst) i trzema krokami (1978, 1999, 2011–2015) przesuniętymi w pionie. Pierwszy krok nocny. Stary `.timeline` zostaje tylko na „O firmie”.
+- Odstępy między sekcjami: tylko dół poprzedniej sekcji (`.home .sec:not(.night) { padding-top: 0 }`). Nigdy `style="padding-top:0"` w szablonie.
+- Ruch: pochylenie kafli do ok. 4° (wyłączone dla kafli wychodzących poza margines), paralaksa zdjęć w kaflach i w Firmie (do 5% wysokości), dryf zdjęcia w Kontakcie, delikatne unoszenie kafli w hero, pas nazw. Wszystko wyłącznie `transform`, `translate` i `opacity`, wszystko wyłączone przy `prefers-reduced-motion`.
+
+Zmiany w wersji 9: (nagłówki w Manrope, zastąpione w wersji 11), wszystkie wymiary w rem, a od 1440 px szerokości `html` rośnie proporcjonalnie (`clamp(100%, 1.1111vw, 300%)`), dzięki czemu strona przy pomniejszeniu zachowuje te same proporcje i marginesy. Przy powiększeniu układ przechodzi na węższy (wymóg dostępności).
 
 Zmiany w wersji 8: strona główna ze zdjęciami (hero, kafle oferty, tło kontaktu; styl w `src/assets/home.css`, pliki w `src/assets/photos/`), formularz wyceny z polem e-mail wysyłany bez otwierania poczty (Netlify Forms, formularz „wycena”).
 
@@ -50,7 +61,7 @@ Zasady:
 - Odrzucone: żółty kolor akcji (#FFD21F) z wersji 1–5.
 
 ## 3. Typografia
-- Nagłówki: Manrope 700 (h3: 600), tracking −0,02em, hostowany lokalnie. Tekst: Geist 400/500/600. Fallback: Segoe UI, system-ui.
+- Nagłówki: Newsreader 600 (h1–h3, duże liczby, cytat), tracking −0,012em, hostowany lokalnie. Tekst i małe etykiety: Geist 400/500/600. Fallback nagłówków: Iowan Old Style, Palatino Linotype, Georgia, serif.
 - Skala: 14 / 17 / 20 / 24 / 32–52 / 42–84 px (`--fs-0` … `--fs-5`). Nagłówek bloku na podstronie: 28–40 px. Innych rozmiarów nie dodajemy.
 - Tekst ciągły max 36–44em, interlinia 1,55. Nagłówki 0,98–1,15, `text-wrap: balance`.
 - Zwykła wielkość liter, cyfry tabelaryczne. Bez wersalików i bez wyróżniania jednego słowa w nagłówku.
@@ -59,7 +70,8 @@ Zasady:
 - Siatka 8 px: 8 / 16 / 24 / 32 / 48 / 72. Sekcja 64–128 px.
 - Kontener 1200 px, margines boczny 16–40 px. Tekst do lewej.
 - Promienie wg roli: kafel i panel 24, pole 14, przycisk i chip 999 (pigułka).
-- Kolejność sekcji strony głównej: Hero → Oferta → Realizacje → Firma (zajawka z linkiem do „O firmie”) → Kontakt z wyceną (noc) → Stopka (noc).
+- Kolejność sekcji strony głównej: Hero → Oferta → Realizacje → pas nazw obiektów → Firma (kafel + trzy kroki, link do „O firmie”) → Kontakt z wyceną (noc) → Stopka (noc).
+- Wychodzenie poza margines: wybrane kafle sięgają krawędzi okna (`--bleed`, `.bleed-l`, `.bleed-r`), reszta zostaje w kolumnie 1200 px. Kafel przy krawędzi okna ma proste rogi od strony krawędzi. Nie więcej niż jeden taki kafel na rząd.
 
 ## 5. Komponenty
 - **Navbar**: jasna belka na całą szerokość, `position: fixed`, STAŁA wysokość 68 px, tło `--bg` z rozmyciem. Przy przewijaniu pojawia się tylko dolna linia. Nigdy `sticky` ze zmianą rozmiaru. Po lewej pełne logo jako obraz (wys. 50 px; `logo-light.png`, w trybie ciemnym `logo-dark.png`), linki w białej pigułce, przycisk „Zadzwoń 501 739 926” w kolorze akcji.
@@ -69,8 +81,10 @@ Zasady:
 - **Przycisk główny**: kolor akcji, pigułka, 54 px, z czasownikiem. **Ghost**: obrys, akcja druga. **Dark**: tylko na kaflu CTA (odwrócone kolory akcji).
 - **Hero**: jasne tło. Po lewej h1, lead, 2 CTA i linia z numerem do wycen. Po prawej stos trzech kafli w 3D: nocny „Zaufali nam”, biały „1978”, biały „Wrocław i cała Polska”. Na telefonie płaska siatka. Odrzucone: ciemny hero, przewód WebGL, rozdzielnica.
 - **Kafel**: tło surface, obrys, r 24, ikona 52 px. Na hover pochylenie 3D do 9° i światło w kolorze akcji za kursorem. Warianty: nocny, CTA (tło w kolorze akcji).
-- **Bento oferty**: siatka 12 kolumn: 7+5, 4+4+4, 8+4. Ostatni kafel to zawsze CTA. Usługi jako chipy.
-- **Realizacje na stronie głównej**: 3 kafle nocne = trzy najnowsze realizacje z włączonym „Duży kafel” + lista dwukolumnowa pozostałych + pasek CTA. Generowane z danych.
+- **Bento oferty**: siatka 12 kolumn: 7+5, 4+8, 7+5 i pasek CTA na całą szerokość. Kafle ze zdjęciem wychodzą poza margines na zmianę: lewa, prawa, lewa. Ostatni kafel to zawsze CTA. Usługi jako chipy.
+- **Realizacje na stronie głównej**: pas (`.strip`) z 3 kaflami = trzy najnowsze realizacje z włączonym „Duży kafel”, szer. 27 rem, link obejmuje cały kafel (`.stretch`), plakietka z rokiem. Pod nim lista dwukolumnowa pozostałych + pasek CTA. Generowane z danych.
+- **Pas nazw** (`.marquee`): tytuły realizacji, separator to cienka kreska (bez kropek). Dekoracja, `aria-hidden`.
+- **Firma na stronie głównej**: `.firm-card` (zdjęcie `photos/biuro.jpg` + tekst; zdjęcie jest ilustracją, bez podpisu twierdzącego, co przedstawia) i `.steps` z trzema kafelkami `.step`.
 - **Formularz wyceny**: 4 pola, jedno wymagane (telefon). Wysyła gotowy e-mail (mailto), bez serwera.
 - **Stopka**: na górze pełne logo na przezroczystym tle (`brand/logo-dark.png`, szer. do 300 px), niżej 4 kolumny danych.
 - **Dock (telefon)**: po przewinięciu 520 px pasek u dołu: „Zadzwoń” i „Wycena”.
@@ -124,9 +138,10 @@ Komponenty podstron:
 Jedna akcja w kolorze akcji w polu widzenia na raz (wyjątek: navbar).
 
 ## 7. Ruch i 3D
-- 3D tylko w CSS: stos kafli w hero (głębia 0 / 90 / 160 px, podąża za kursorem) oraz pochylenie kafli na stronie głównej. Panele podstron się nie pochylają, poza panelami oferty. Żadnych bibliotek 3D.
-- Sekcje NIE wjeżdżają przy przewijaniu. Treść kompletna bez JS.
-- `prefers-reduced-motion`: stos stoi w pozycji spoczynkowej, kafle się nie pochylają.
+- 3D tylko w CSS: stos kafli w hero (głębia 0 / 90 / 160 px, podąża za kursorem) oraz łagodne pochylenie kafli na stronie głównej (do ok. 4°, tylko mysz). Panele podstron się nie pochylają, poza panelami oferty. Żadnych bibliotek 3D.
+- Dodatkowo na stronie głównej: paralaksa zdjęć (skrypt ustawia `--py`, obraz ma 6% zapasu z każdej strony), dryf zdjęcia w Kontakcie, unoszenie kafli w hero, pas nazw. Czasy interfejsu 150–300 ms, ruch tła wolny (7–110 s).
+- Sekcje NIE wjeżdżają przy przewijaniu i nic nie jest ukryte do czasu przewinięcia. Treść kompletna bez JS.
+- `prefers-reduced-motion`: stos stoi w pozycji spoczynkowej, kafle się nie pochylają, paralaksy, dryfu, unoszenia i pasa nazw nie ma.
 
 ## 8. Psychologia poznawcza
 | Zasada | Zastosowanie |
