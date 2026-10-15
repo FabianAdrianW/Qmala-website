@@ -40,7 +40,7 @@ Proporcje na stronie: około 70% mgła i biel, 20% granat, 10% błękit i cyjan.
 Sprawdzone pary (kontrast tekstu co najmniej 4,5:1): granat na mgle, biel na błękicie, granat na cyjanie, biel i lodowy błękit na granacie. Zakazane: cyjan lub lodowy błękit jako tekst na jasnym tle.
 
 ## 3. Typografia
-- Nagłówki: Bricolage Grotesque 700. Tekst: Geist 400/500/600.
+- Nagłówki: Manrope 700 (hostowany lokalnie). Tekst: Geist 400/500/600.
 - Napis w logo ma własny krój (geometryczny, szeroki grotesk). Nie odtwarzamy go w nagłówkach; logo zawsze wstawiamy jako obraz.
 
 ## 4. Kształt i styl
