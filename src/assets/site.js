@@ -4,7 +4,7 @@
   var fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
 
   /* navbar: zmienia się tylko linia, nigdy rozmiar */
-  var nav = document.getElementById('nav'), links = document.getElementById('nav-links'), toggle = document.getElementById('nav-toggle'), dock = document.getElementById('dock');
+  var nav = document.getElementById('nav'), links = document.getElementById('nav-links'), toggle = document.getElementById('nav-toggle'), dock = document.getElementById('dock'), fab = document.getElementById('fab'), kontakt = document.getElementById('kontakt');
   var small = matchMedia('(max-width: 1020px)');
   function setMenu(open) { links.hidden = !open && small.matches; toggle.setAttribute('aria-expanded', String(open)); toggle.textContent = open ? 'Zamknij' : 'Menu'; }
   setMenu(false);
@@ -13,7 +13,8 @@
   links.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setMenu(false); });
   var ticking = false;
-  function onScroll() { ticking = false; nav.classList.toggle('is-scrolled', scrollY > 24); dock.classList.toggle('is-up', scrollY > 520); }
+  function onScroll() { ticking = false; nav.classList.toggle('is-scrolled', scrollY > 24); dock.classList.toggle('is-up', scrollY > 520);
+    if (fab) { var kr = kontakt ? kontakt.getBoundingClientRect() : null; fab.classList.toggle('is-up', scrollY > 520 && !(kr && kr.top < innerHeight * .6 && kr.bottom > 0)); } }
   addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
   onScroll();
   var navA = [].slice.call(links.querySelectorAll('a[href^="#"]'));
@@ -139,11 +140,11 @@
     });
   })();
 
-  /* telefon: formularz wyceny wysuwa się jako panel od dołu z dowolnego miejsca strony (ten sam formularz, jeden komplet pól) */
+  /* formularz wyceny jako panel (telefon: od dołu, komputer: okno) z dowolnego miejsca strony (ten sam formularz, jeden komplet pól) */
   (function () {
     var sheet = document.getElementById('sheet'), form = document.getElementById('wycena'); if (!sheet || !form) return;
-    var mq = window.matchMedia('(max-width: 47.5em)'), mark = document.createComment('wycena'), opener = null, isOpen = false, timer = 0,
-        rest = ['top', 'nav', 'dock'].map(function (id) { return document.getElementById(id); }).concat([document.querySelector('footer')]).filter(Boolean);
+    var mark = document.createComment('wycena'), opener = null, isOpen = false, timer = 0,
+        rest = ['top', 'nav', 'dock', 'fab'].map(function (id) { return document.getElementById(id); }).concat([document.querySelector('footer')]).filter(Boolean);
     function setInert(on) { rest.forEach(function (n) { if (on) n.setAttribute('inert', ''); else n.removeAttribute('inert'); }); }
     function open(from) {
       if (isOpen) return; isOpen = true; opener = from; clearTimeout(timer);
@@ -161,13 +162,11 @@
     }
     document.addEventListener('click', function (e) {
       var a = e.target.closest && e.target.closest('a[data-sheet]');
-      if (a && mq.matches) { e.preventDefault(); open(a); }
+      if (a) { e.preventDefault(); open(a); }
     });
     document.getElementById('sheet-x').addEventListener('click', close);
     document.getElementById('sheet-bg').addEventListener('click', close);
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
-    var onMq = function () { if (!mq.matches && isOpen) { close(); } };
-    if (mq.addEventListener) mq.addEventListener('change', onMq); else mq.addListener(onMq);
   })();
 
   /* HERO ze zdjęciem: lekkie pochylenie za kursorem (tylko mysz, bez reduced motion) */
