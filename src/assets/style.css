@@ -52,7 +52,7 @@
   --night: #040B16; --shadow: rgba(0, 0, 0, .5); color-scheme: dark;
 }
 /* na ciemnych powierzchniach akcja jest cyjanowa (jak „.PL” w logo) */
-.night, .tile-night, .quote, .foot, .dock, .lb { --action: var(--brand-cyan); --action-hover: #7BEEF7; --action-ink: #06101D; }
+.night, .tile-night, .quote, .foot, .dock, .lb, .sheet { --action: var(--brand-cyan); --action-hover: #7BEEF7; --action-ink: #06101D; }
 
 *, *::before, *::after { box-sizing: border-box; }
 /* Skala: do 1440 px szerokości 16 px; szerzej (duży monitor, pomniejszenie przeglądarki) wszystko rośnie proporcjonalnie, więc proporcje i marginesy są stałe. */
@@ -90,7 +90,7 @@ h3 { font-size: var(--fs-3); line-height: 1.15; }
 .btn-primary:active { transform: translateY(0); }
 .btn-ghost { border-color: var(--line); color: var(--ink); background: transparent; }
 .btn-ghost:hover { border-color: var(--ink); }
-.night .btn-ghost { border-color: var(--night-line); color: var(--night-ink); }
+.night .btn-ghost, .sheet .btn-ghost { border-color: var(--night-line); color: var(--night-ink); }
 .night .btn-ghost:hover { border-color: var(--night-ink); }
 .btn-dark { background: var(--night); color: var(--night-ink); }
 .btn-dark:hover { transform: translateY(-2px); }
@@ -297,6 +297,25 @@ h3 { font-size: var(--fs-3); line-height: 1.15; }
   .dock .btn { flex: 1; min-height: 3rem; padding: 0 0.75rem; box-shadow: none; }
   .dock .btn-ghost { color: var(--night-ink); border-color: var(--night-line); }
 }
+
+/* panel wyceny na telefonie: ten sam formularz co w sekcji Kontakt, wysuwany od dołu z dowolnego miejsca */
+.sheet, .sheet-x { display: none; }
+@media (max-width: 47.5em) {
+  .sheet { display: flex; align-items: flex-end; position: fixed; inset: 0; z-index: 70; visibility: hidden; color: var(--night-ink); transition: visibility 0s linear .35s; }
+  .sheet.is-open { visibility: visible; transition-delay: 0s; }
+  .sheet-bg { position: absolute; inset: 0; background: rgba(4, 11, 22, .66); opacity: 0; transition: opacity .3s ease; }
+  .sheet.is-open .sheet-bg { opacity: 1; }
+  .sheet .form {
+    position: relative; width: 100%; max-height: calc(100dvh - 3.5rem - env(safe-area-inset-top, 0px)); overflow-y: auto; overscroll-behavior: contain;
+    border-radius: var(--r-tile) var(--r-tile) 0 0; border-bottom: 0; padding-bottom: calc(1.375rem + env(safe-area-inset-bottom, 0px));
+    transform: translateY(100%); transition: transform .35s cubic-bezier(.2, .7, .2, 1); outline: none;
+  }
+  .sheet.is-open .form { transform: none; }
+  .sheet .sheet-x { display: grid; place-items: center; position: sticky; top: 0; z-index: 1; justify-self: end; width: 2.75rem; height: 2.75rem; margin: -0.5rem -0.5rem -2.75rem 0; border: 0; border-radius: var(--r-pill); background: transparent; color: var(--night-ink-2); cursor: pointer; }
+  .sheet .sheet-x:focus-visible { outline: 2px solid var(--action); outline-offset: -2px; }
+  .sheet .form h3 { padding-right: 3rem; }
+}
+@media (prefers-reduced-motion: reduce) { .sheet, .sheet-bg, .sheet .form { transition: none; } }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

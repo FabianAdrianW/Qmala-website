@@ -80,8 +80,11 @@
 
 <div class="dock" id="dock">
   <a class="btn btn-primary" href="{{ site.telefon | tel }}">Zadzwoń</a>
-  <a class="btn btn-ghost" href="{{ h }}#wycena">Wycena</a>
+  <a class="btn btn-ghost" href="{{ h }}#wycena" data-sheet>Wycena</a>
 </div>
+{%- if home %}
+<div class="sheet" id="sheet" aria-hidden="true"><div class="sheet-bg" id="sheet-bg"></div></div>
+{%- endif %}
 
 <script src="site.js"></script>
 </body>

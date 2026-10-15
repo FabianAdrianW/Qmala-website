@@ -139,6 +139,37 @@
     });
   })();
 
+  /* telefon: formularz wyceny wysuwa się jako panel od dołu z dowolnego miejsca strony (ten sam formularz, jeden komplet pól) */
+  (function () {
+    var sheet = document.getElementById('sheet'), form = document.getElementById('wycena'); if (!sheet || !form) return;
+    var mq = window.matchMedia('(max-width: 47.5em)'), mark = document.createComment('wycena'), opener = null, isOpen = false, timer = 0,
+        rest = ['top', 'nav', 'dock'].map(function (id) { return document.getElementById(id); }).concat([document.querySelector('footer')]).filter(Boolean);
+    function setInert(on) { rest.forEach(function (n) { if (on) n.setAttribute('inert', ''); else n.removeAttribute('inert'); }); }
+    function open(from) {
+      if (isOpen) return; isOpen = true; opener = from; clearTimeout(timer);
+      form.parentNode.replaceChild(mark, form); sheet.appendChild(form);
+      form.setAttribute('role', 'dialog'); form.setAttribute('aria-modal', 'true'); form.tabIndex = -1;
+      sheet.setAttribute('aria-hidden', 'false'); setInert(true); document.documentElement.style.overflow = 'hidden';
+      requestAnimationFrame(function () { requestAnimationFrame(function () { sheet.classList.add('is-open'); form.scrollTop = 0; form.focus({ preventScroll: true }); }); });
+    }
+    function close() {
+      if (!isOpen) return; isOpen = false;
+      sheet.classList.remove('is-open'); sheet.setAttribute('aria-hidden', 'true'); setInert(false); document.documentElement.style.overflow = '';
+      function restore() { if (mark.parentNode) mark.parentNode.replaceChild(form, mark); form.removeAttribute('role'); form.removeAttribute('aria-modal'); form.removeAttribute('tabindex'); }
+      timer = setTimeout(restore, 380);
+      if (opener && opener.focus) opener.focus({ preventScroll: true });
+    }
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[data-sheet]');
+      if (a && mq.matches) { e.preventDefault(); open(a); }
+    });
+    document.getElementById('sheet-x').addEventListener('click', close);
+    document.getElementById('sheet-bg').addEventListener('click', close);
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+    var onMq = function () { if (!mq.matches && isOpen) { close(); } };
+    if (mq.addEventListener) mq.addEventListener('change', onMq); else mq.addListener(onMq);
+  })();
+
   /* HERO ze zdjęciem: lekkie pochylenie za kursorem (tylko mysz, bez reduced motion) */
   (function () {
     var art = document.getElementById('hero-art'); if (!art || calm || !fine) return;

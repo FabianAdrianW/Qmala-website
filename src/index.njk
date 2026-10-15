@@ -15,7 +15,7 @@ description: Zakład Elektro-Instalacyjny Wojciech Kumala. Instalacje elektryczn
           {% include "ico-phone.njk" %}
           Zadzwoń: {{ site.telefon }}
         </a>
-        <a class="btn btn-ghost" href="#wycena">Poproś o wycenę</a>
+        <a class="btn btn-ghost" href="#wycena" data-sheet>Poproś o wycenę</a>
       </div>
       <p class="hero-note">Wolisz od razu rozmawiać o cenie? Wyceny: <a href="{{ site.telefon_wyceny | tel }}">{{ site.telefon_wyceny }}</a></p>
     </div>
@@ -130,7 +130,7 @@ description: Zakład Elektro-Instalacyjny Wojciech Kumala. Instalacje elektryczn
     <div class="cta-row">
       <p>Masz podobny obiekt? Wycenimy go.</p>
       <div>
-        <a class="btn btn-primary" href="#wycena">Poproś o wycenę</a>
+        <a class="btn btn-primary" href="#wycena" data-sheet>Poproś o wycenę</a>
         <a class="btn btn-ghost" href="realizacje.html">Zobacz zdjęcia z realizacji</a>
       </div>
     </div>
@@ -190,10 +190,11 @@ description: Zakład Elektro-Instalacyjny Wojciech Kumala. Instalacje elektryczn
       {%- endif %}
     </div>
 
-    <form class="form" id="wycena" name="wycena" data-mail="{{ site.email_biuro }}" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+    <form class="form" id="wycena" name="wycena" aria-labelledby="f-h" data-mail="{{ site.email_biuro }}" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
       <input type="hidden" name="form-name" value="wycena">
+      <button class="sheet-x" type="button" id="sheet-x" aria-label="Zamknij formularz wyceny"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
       <div class="form-body">
-        <h3>Poproś o wycenę</h3>
+        <h3 id="f-h">Poproś o wycenę</h3>
         <p class="form-lead">Napisz, co trzeba zrobić. Wystarczy e-mail albo telefon.</p>
         <div class="field"><label for="f-temat">Czego dotyczy?</label>
           <select id="f-temat" name="temat"><option>Instalacja elektryczna</option><option>Awaria</option><option>Inteligentny dom i automatyka</option><option>Rozdzielnica</option><option>Oświetlenie</option><option>Projekt, pomiary, przegląd, odgromy</option><option>Sieć, antena, domofon, monitoring</option><option>Coś innego</option></select></div>
