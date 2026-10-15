@@ -1,7 +1,9 @@
-# Qmala — DESIGN.md (źródło prawdy UI), wersja 10
+# Qmala — DESIGN.md (źródło prawdy UI), wersja 11
 
 Jedyny obowiązujący opis stylu strony qmala.pl. Kod (`src/assets/style.css`, blok `:root`) musi się z nim zgadzać.
 Kolejność ważności: słowa właściciela → ten plik → gust wykonawcy. Zmiana tokenu = zmiana tu i w `:root` jednocześnie.
+
+Zmiany w wersji 11: nagłówki w Newsreader (antykwa o większej gracji, nadal bardzo czytelna) zamiast Manrope. Tokeny `--font-display`, `--fw-display` (600) i `--ls-display` (−0,012em) w `style.css`; liczby w nagłówkach z cyframi pełnowymiarowymi i proporcjonalnymi. Małe etykiety (rok na kafelku, plakietka „Od 1978”, chipy, przyciski) zostają w Geist, bo w małych rozmiarach antykwa tracona na czytelności. Plik czcionki: `src/assets/fonts/newsreader-*.woff2` (licencja OFL w `LICENSE-Newsreader.txt`).
 
 Zmiany w wersji 10 (rytm strony głównej, styl w `src/assets/home.css`, skrypt w `src/assets/site.js`):
 - Margines boczny nie jest już jednakowy w każdej sekcji. Zmienna `--bleed` (odległość od kolumny treści do krawędzi okna, liczona w rem) pozwala kaflom wychodzić poza kolumnę: klasy `.bleed-l` i `.bleed-r`. Tekst w takim kafelku zostaje na linii siatki (dopełnienie o `--bleed`). Od 56 rem w górę; poniżej wszystko w jednej kolumnie bez wychodzenia.
@@ -12,7 +14,7 @@ Zmiany w wersji 10 (rytm strony głównej, styl w `src/assets/home.css`, skrypt 
 - Odstępy między sekcjami: tylko dół poprzedniej sekcji (`.home .sec:not(.night) { padding-top: 0 }`). Nigdy `style="padding-top:0"` w szablonie.
 - Ruch: pochylenie kafli do ok. 4° (wyłączone dla kafli wychodzących poza margines), paralaksa zdjęć w kaflach i w Firmie (do 5% wysokości), dryf zdjęcia w Kontakcie, delikatne unoszenie kafli w hero, pas nazw. Wszystko wyłącznie `transform`, `translate` i `opacity`, wszystko wyłączone przy `prefers-reduced-motion`.
 
-Zmiany w wersji 9: nagłówki w Manrope (czytelniejszy, bardziej oficjalny), wszystkie wymiary w rem, a od 1440 px szerokości `html` rośnie proporcjonalnie (`clamp(100%, 1.1111vw, 300%)`), dzięki czemu strona przy pomniejszeniu zachowuje te same proporcje i marginesy. Przy powiększeniu układ przechodzi na węższy (wymóg dostępności).
+Zmiany w wersji 9: (nagłówki w Manrope, zastąpione w wersji 11), wszystkie wymiary w rem, a od 1440 px szerokości `html` rośnie proporcjonalnie (`clamp(100%, 1.1111vw, 300%)`), dzięki czemu strona przy pomniejszeniu zachowuje te same proporcje i marginesy. Przy powiększeniu układ przechodzi na węższy (wymóg dostępności).
 
 Zmiany w wersji 8: strona główna ze zdjęciami (hero, kafle oferty, tło kontaktu; styl w `src/assets/home.css`, pliki w `src/assets/photos/`), formularz wyceny z polem e-mail wysyłany bez otwierania poczty (Netlify Forms, formularz „wycena”).
 
@@ -59,7 +61,7 @@ Zasady:
 - Odrzucone: żółty kolor akcji (#FFD21F) z wersji 1–5.
 
 ## 3. Typografia
-- Nagłówki: Manrope 700 (h3: 600), tracking −0,02em, hostowany lokalnie. Tekst: Geist 400/500/600. Fallback: Segoe UI, system-ui.
+- Nagłówki: Newsreader 600 (h1–h3, duże liczby, cytat), tracking −0,012em, hostowany lokalnie. Tekst i małe etykiety: Geist 400/500/600. Fallback nagłówków: Iowan Old Style, Palatino Linotype, Georgia, serif.
 - Skala: 14 / 17 / 20 / 24 / 32–52 / 42–84 px (`--fs-0` … `--fs-5`). Nagłówek bloku na podstronie: 28–40 px. Innych rozmiarów nie dodajemy.
 - Tekst ciągły max 36–44em, interlinia 1,55. Nagłówki 0,98–1,15, `text-wrap: balance`.
 - Zwykła wielkość liter, cyfry tabelaryczne. Bez wersalików i bez wyróżniania jednego słowa w nagłówku.

@@ -1,8 +1,8 @@
 /* ŹRÓDŁO PRAWDY: DESIGN.md i BRAND.md. Zmieniasz token tutaj → zmień go też tam.
    Layout: jasna strona zbudowana z kafli, ciemne tylko kafle wyróżnione i zamknięcie (kontakt, stopka). W hero stos kafli w 3D. */
-/* Manrope (nagłówki) hostowany lokalnie: bez zapytań do Google, polskie znaki w pliku latin-ext */
-@font-face { font-family: "Manrope"; font-style: normal; font-weight: 200 800; font-display: swap; src: url("fonts/manrope-latin-ext-wght-normal.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
-@font-face { font-family: "Manrope"; font-style: normal; font-weight: 200 800; font-display: swap; src: url("fonts/manrope-latin-wght-normal.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+/* Newsreader (nagłówki) hostowany lokalnie: bez zapytań do Google, polskie znaki w pliku latin-ext. Licencja OFL: fonts/LICENSE-Newsreader.txt */
+@font-face { font-family: "Newsreader"; font-style: normal; font-weight: 200 800; font-display: swap; src: url("fonts/newsreader-latin-ext-wght-normal.woff2") format("woff2"); unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+@font-face { font-family: "Newsreader"; font-style: normal; font-weight: 200 800; font-display: swap; src: url("fonts/newsreader-latin-wght-normal.woff2") format("woff2"); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 
 :root {
   /* marka: granat, błękit królewski i cyjan z logo QMALA.PL (BRAND.md) */
@@ -28,7 +28,8 @@
   --night-ink-2: #9DB0C6;
   --lamp: #37D067;
   --shadow: rgba(11, 22, 38, .16);
-  --font-display: "Manrope", "Segoe UI", system-ui, sans-serif;
+  --font-display: "Newsreader", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --fw-display: 600; --ls-display: -.012em;
   --font-body: "Geist", "Segoe UI", system-ui, -apple-system, sans-serif;
   --fs-0: .875rem; --fs-1: 1.0625rem; --fs-2: 1.25rem; --fs-3: 1.5rem;
   --fs-4: clamp(1.85rem, 4vw, 3rem); --fs-5: clamp(2.3rem, 6.4vw, 4.75rem);
@@ -60,10 +61,12 @@ body { margin: 0; background: var(--bg); color: var(--ink); font: 400 var(--fs-1
 h1, h2, h3, p, ul, ol, dl, dd { margin: 0; padding: 0; }
 ul, ol { list-style: none; }
 a { color: inherit; }
-h1, h2, h3 { font-family: var(--font-display); font-weight: 700; letter-spacing: -.02em; text-wrap: balance; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: var(--fw-display); letter-spacing: var(--ls-display); text-wrap: balance; }
+/* cyfry w nagłówkach: pełnowymiarowe i proporcjonalne (rok 1978, numer telefonu wyglądają równo) */
+h1, h2, h3, .big, .bigtel, .timeline b, .cta-row p, .quote blockquote { font-variant-numeric: lining-nums proportional-nums; }
 h1 { font-size: var(--fs-5); line-height: 1.06; }
 h2 { font-size: var(--fs-4); line-height: 1.12; }
-h3 { font-size: var(--fs-3); line-height: 1.15; font-weight: 600; letter-spacing: -.015em; }
+h3 { font-size: var(--fs-3); line-height: 1.15; }
 :focus-visible { outline: 3px solid var(--link); outline-offset: 3px; border-radius: 0.375rem; }
 .night :focus-visible { outline-color: var(--action); }
 .wrap { max-width: 75rem; margin-inline: auto; padding-inline: var(--gutter); }
@@ -153,7 +156,7 @@ h3 { font-size: var(--fs-3); line-height: 1.15; font-weight: 600; letter-spacing
 .trust { display: grid; gap: 0.875rem; font-size: var(--fs-2); font-weight: 500; line-height: 1.3; }
 .trust li { display: flex; gap: 0.75rem; align-items: flex-start; }
 .trust svg { width: 1.375rem; height: 1.375rem; color: var(--action); flex: none; margin-top: 2px; }
-.big { font: 700 clamp(3rem, 5vw, 4.25rem)/1 var(--font-display); letter-spacing: -.03em; }
+.big { font: var(--fw-display) clamp(3rem, 5vw, 4.25rem)/1 var(--font-display); letter-spacing: var(--ls-display); }
 .lamp-row { display: flex; align-items: center; gap: 0.625rem; font-weight: 600; }
 .lamp-row i { width: 0.5625rem; height: 0.5625rem; border-radius: 50%; background: var(--lamp); box-shadow: 0 0 0 0.25rem color-mix(in srgb, var(--lamp) 25%, transparent); flex: none; }
 @media (max-width: 61.25em) {
@@ -208,7 +211,7 @@ h3 { font-size: var(--fs-3); line-height: 1.15; font-weight: 600; letter-spacing
 .works strong { font-weight: 600; }
 @media (max-width: 47.5em) { .works { grid-template-columns: minmax(0, 1fr); } }
 .cta-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-3); margin-top: var(--s-5); padding: clamp(1.375rem, 3vw, 2.25rem); border-radius: var(--r-tile); background: var(--surface); border: 1px solid var(--line); }
-.cta-row p { font: 600 var(--fs-3)/1.2 var(--font-display); letter-spacing: -.015em; max-width: 24em; overflow-wrap: anywhere; }
+.cta-row p { font: var(--fw-display) var(--fs-3)/1.2 var(--font-display); letter-spacing: var(--ls-display); max-width: 24em; overflow-wrap: anywhere; }
 .cta-row p small { display: block; margin-top: 0.5rem; font: 400 var(--fs-0)/1.5 var(--font-body); letter-spacing: 0; color: var(--ink-2); }
 .cta-row div { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; }
 
@@ -224,7 +227,7 @@ h3 { font-size: var(--fs-3); line-height: 1.15; font-weight: 600; letter-spacing
 .timeline li { position: relative; padding: 0 0 var(--s-4) var(--s-4); }
 .timeline li:last-child { padding-bottom: 0; }
 .timeline li::before { content: ""; position: absolute; left: -0.5rem; top: .5em; width: 0.875rem; height: 0.875rem; border-radius: 50%; background: var(--action); box-shadow: 0 0 0 0.3125rem var(--surface); }
-.timeline b { display: block; font: 700 var(--fs-4)/1.05 var(--font-display); letter-spacing: -.03em; }
+.timeline b { display: block; font: var(--fw-display) var(--fs-4)/1.05 var(--font-display); letter-spacing: var(--ls-display); }
 .timeline span { color: var(--ink-2); }
 .facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s-4); margin-top: var(--s-6); padding-top: var(--s-4); border-top: 1px solid var(--line); }
 .facts.flat { margin-top: 0; padding-top: 0; border-top: 0; }
@@ -235,7 +238,7 @@ h3 { font-size: var(--fs-3); line-height: 1.15; font-weight: 600; letter-spacing
 
 /* KONTAKT */
 .contact-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: var(--s-6); align-items: start; }
-.bigtel { display: inline-block; font: 700 var(--fs-5)/1 var(--font-display); letter-spacing: -.025em; text-decoration: none; color: var(--action); margin-top: var(--s-1); }
+.bigtel { display: inline-block; font: var(--fw-display) var(--fs-5)/1 var(--font-display); letter-spacing: var(--ls-display); text-decoration: none; color: var(--action); margin-top: var(--s-1); }
 .bigtel:hover { color: var(--action-hover); }
 .lines { display: grid; margin-top: var(--s-4); }
 .line { display: grid; grid-template-columns: 6.5rem minmax(0, 1fr) auto; gap: var(--s-2); align-items: center; padding-block: 0.875rem; border-top: 1px solid var(--night-line); }
@@ -255,7 +258,6 @@ h3 { font-size: var(--fs-3); line-height: 1.15; font-weight: 600; letter-spacing
 .social { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: var(--s-4); }
 .social .btn { min-height: 2.875rem; padding: 0 1.25rem; }
 .form { display: grid; gap: var(--s-2); padding: clamp(1.375rem, 3vw, 2.25rem); border-radius: var(--r-tile); background: var(--night-2); border: 1px solid var(--night-line); scroll-margin-top: 5.25rem; }
-.form h3 { font-weight: 700; }
 .form > p { color: var(--night-ink-2); margin-top: -0.5rem; }
 .field { display: grid; gap: 0.4375rem; }
 .field label { font-size: var(--fs-0); font-weight: 500; color: var(--night-ink-2); }
@@ -341,7 +343,7 @@ h3 { font-size: var(--fs-3); line-height: 1.15; font-weight: 600; letter-spacing
 .ref { align-content: start; gap: var(--s-2); }
 .ref .shot { aspect-ratio: 4 / 5; background: #fff; border: 1px solid var(--line); }
 .ref .shot img { object-position: top; }
-.ref h2 { font-size: var(--fs-2); line-height: 1.2; font-weight: 600; letter-spacing: -.01em; }
+.ref h2 { font-size: var(--fs-2); line-height: 1.2; }
 .ref p { color: var(--ink-2); font-size: 1rem; }
 .ref blockquote { margin: 0; padding-left: 0.875rem; border-left: 3px solid var(--action); font-weight: 500; }
 @media (max-width: 56.25em) { .refs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
@@ -364,7 +366,7 @@ h3 { font-size: var(--fs-3); line-height: 1.15; font-weight: 600; letter-spacing
 @media (max-width: 61.25em) { .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } .trio { grid-template-columns: minmax(0, 1fr); } }
 @media (max-width: 35em) { .steps { grid-template-columns: minmax(0, 1fr); } }
 .quote { margin-top: var(--s-6); background: var(--night-2); border-color: var(--night-line); color: var(--night-ink); }
-.quote blockquote { margin: 0; padding-left: var(--s-3); border-left: 0.25rem solid var(--action); font: 600 clamp(1.35rem, 2.6vw, 2rem)/1.25 var(--font-display); letter-spacing: -.015em; max-width: 28em; text-wrap: balance; overflow-wrap: anywhere; }
+.quote blockquote { margin: 0; padding-left: var(--s-3); border-left: 0.25rem solid var(--action); font: var(--fw-display) clamp(1.35rem, 2.6vw, 2rem)/1.25 var(--font-display); letter-spacing: var(--ls-display); max-width: 28em; text-wrap: balance; overflow-wrap: anywhere; }
 .quote p { color: var(--night-ink-2); max-width: 40em; }
 .quote .btn-ghost { border-color: var(--night-line); color: var(--night-ink); }
 .quote .btn-ghost:hover { border-color: var(--night-ink); }
