@@ -102,9 +102,6 @@
     var body = form.querySelector('.form-body'), done = document.getElementById('f-done'), err = document.getElementById('f-err'),
         send = document.getElementById('f-send'), email = document.getElementById('f-email'), tel = document.getElementById('f-tel'),
         temat = document.getElementById('f-temat'), opis = document.getElementById('f-opis');
-    // Na stronie w sieci (qmala.pl, podgląd Netlify, każdy adres http/https) formularz idzie na ten sam adres.
-    // Z pliku lokalnego i z localhost idzie na qmala.pl (odpowiedź jest wtedy nieprzejrzysta, więc o sukcesie decyduje samo dotarcie żądania).
-    var here = /^https?:$/.test(location.protocol) && !/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
     function showErr(text, field, link) {
       err.textContent = text;
       if (link) { err.appendChild(document.createTextNode(' ')); var a = document.createElement('a'); a.href = link.href; a.textContent = link.text; err.appendChild(a); }
@@ -129,8 +126,10 @@
       if (em && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)) return showErr('Sprawdź adres e-mail. Powinien wyglądać tak: nazwa@domena.pl.', email);
       if (!em && ph.replace(/\D/g, '').length < 9) return showErr('Numer telefonu jest za krótki. Podaj co najmniej 9 cyfr.', tel);
       send.disabled = true; send.textContent = 'Wysyłam…';
-      var req = fetch(here ? '/' : 'https://qmala.pl/', { method: 'POST', mode: here ? 'same-origin' : 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() })
-        .then(function (r) { if (here && !r.ok) throw new Error('HTTP ' + r.status); });
+      // Zawsze na produkcyjny formularz qmala.pl (ten sam, który Netlify rejestruje). Podgląd branch deploy bywa
+      // za logowaniem SSO, wtedy POST na jego adres dostaje odpowiedź, która nie jest zapisem formularza.
+      // no-cors: odpowiedź jest nieczytelna, więc sukces = żądanie doszło; błąd tylko przy braku sieci.
+      var req = fetch('https://qmala.pl/', { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() });
       req.then(function () { showDone(em, ph); }, function () {
         var txt = ['Temat: ' + temat.value, 'Opis: ' + (opis.value.trim() || '-'), 'E-mail: ' + (em || '-'), 'Telefon: ' + (ph || '-')].join('\n');
         showErr('Nie udało się wysłać. Wpisane dane zostały w formularzu. Spróbuj jeszcze raz albo zadzwoń.', null,
