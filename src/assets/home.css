@@ -19,6 +19,20 @@
 @media (max-width: 55.99rem) and (min-width: 30rem) { .hero-stack { grid-template-columns: 1fr 1fr; } .hero-photo { grid-column: 1 / -1; } }
 @media (max-width: 55.99rem) { .hero-grid { grid-template-columns: minmax(0, 1fr); gap: var(--s-5); } }
 
+/* telefon: zdjęcie nie jest już osobnym kafelkiem, tylko tłem hero; wygasza się w kolor strony, tekst zostaje czytelny */
+@media (max-width: 47.5em) {
+  .home .hero { isolation: isolate; }
+  .hero-art, .hero-stack { position: static; perspective: none; transform: none; transform-style: flat; }
+  .hero-stack { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .hero-photo {
+    position: absolute; z-index: -1; top: 0; left: 0; right: 0; height: 42rem; grid-column: auto; aspect-ratio: auto;
+    border-radius: 0; box-shadow: none; background: transparent;
+    -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 52%, transparent 100%); mask-image: linear-gradient(to bottom, #000 0, #000 52%, transparent 100%);
+  }
+  .hero-photo img { object-position: 68% 22%; filter: saturate(.55) contrast(.95); }
+  .hero-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, color-mix(in srgb, var(--bg) 86%, transparent) 0, color-mix(in srgb, var(--bg) 92%, transparent) 60%, var(--bg) 100%); }
+}
+
 /* kafle ze zdjęciem */
 .photo { display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; isolation: isolate; background: var(--night-2); border-color: var(--night-line); color: var(--night-ink); min-height: 19rem; justify-content: flex-end; }
 .photo::before { display: none; }
