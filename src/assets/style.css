@@ -298,24 +298,43 @@ h3 { font-size: var(--fs-3); line-height: 1.15; }
   .dock .btn-ghost { color: var(--night-ink); border-color: var(--night-line); }
 }
 
-/* panel wyceny na telefonie: ten sam formularz co w sekcji Kontakt, wysuwany od dołu z dowolnego miejsca */
-.sheet, .sheet-x { display: none; }
-@media (max-width: 47.5em) {
-  .sheet { display: flex; align-items: flex-end; position: fixed; inset: 0; z-index: 70; visibility: hidden; color: var(--night-ink); transition: visibility 0s linear .35s; }
-  .sheet.is-open { visibility: visible; transition-delay: 0s; }
-  .sheet-bg { position: absolute; inset: 0; background: rgba(4, 11, 22, .66); opacity: 0; transition: opacity .3s ease; }
-  .sheet.is-open .sheet-bg { opacity: 1; }
-  .sheet .form {
-    position: relative; width: 100%; max-height: calc(100dvh - 3.5rem - env(safe-area-inset-top, 0px)); overflow-y: auto; overscroll-behavior: contain;
-    border-radius: var(--r-tile) var(--r-tile) 0 0; border-bottom: 0; padding-bottom: calc(1.375rem + env(safe-area-inset-bottom, 0px));
-    transform: translateY(100%); transition: transform .35s cubic-bezier(.2, .7, .2, 1); outline: none;
-  }
-  .sheet.is-open .form { transform: none; }
-  .sheet .sheet-x { display: grid; place-items: center; position: sticky; top: 0; z-index: 1; justify-self: end; width: 2.75rem; height: 2.75rem; margin: -0.5rem -0.5rem -2.75rem 0; border: 0; border-radius: var(--r-pill); background: transparent; color: var(--night-ink-2); cursor: pointer; }
-  .sheet .sheet-x:focus-visible { outline: 2px solid var(--action); outline-offset: -2px; }
-  .sheet .form h3 { padding-right: 3rem; }
+/* panel wyceny: ten sam formularz co w sekcji Kontakt, dostępny z dowolnego miejsca strony.
+   Telefon: wysuwany od dołu. Komputer: okno na środku, otwierane przyciskiem .fab (tylko wycena). */
+.sheet { display: flex; align-items: flex-end; justify-content: center; position: fixed; inset: 0; z-index: 70; visibility: hidden; color: var(--night-ink); transition: visibility 0s linear .35s; }
+.sheet.is-open { visibility: visible; transition-delay: 0s; }
+.sheet-bg { position: absolute; inset: 0; background: rgba(4, 11, 22, .66); opacity: 0; transition: opacity .3s ease; }
+.sheet.is-open .sheet-bg { opacity: 1; }
+.sheet .form {
+  position: relative; width: 100%; max-height: calc(100dvh - 3.5rem - env(safe-area-inset-top, 0px)); overflow-y: auto; overscroll-behavior: contain;
+  border-radius: var(--r-tile) var(--r-tile) 0 0; border-bottom: 0; padding-bottom: calc(1.375rem + env(safe-area-inset-bottom, 0px));
+  transform: translateY(100%); transition: transform .35s cubic-bezier(.2, .7, .2, 1); outline: none;
 }
-@media (prefers-reduced-motion: reduce) { .sheet, .sheet-bg, .sheet .form { transition: none; } }
+.sheet.is-open .form { transform: none; }
+.sheet-x { display: none; }
+.sheet .sheet-x { display: grid; place-items: center; position: sticky; top: 0; z-index: 1; justify-self: end; width: 2.75rem; height: 2.75rem; margin: -0.5rem -0.5rem -2.75rem 0; border: 0; border-radius: var(--r-pill); background: transparent; color: var(--night-ink-2); cursor: pointer; }
+.sheet .sheet-x:focus-visible { outline: 2px solid var(--action); outline-offset: -2px; }
+.sheet .form h3 { padding-right: 3rem; }
+@media (min-width: 47.51em) {
+  .sheet { align-items: center; padding: 2rem; }
+  .sheet .form { width: min(34rem, 100%); max-height: calc(100dvh - 4rem); border-radius: var(--r-tile); border-bottom: 1px solid var(--night-line); padding-bottom: clamp(1.375rem, 3vw, 2.25rem); transform: translateY(1.5rem); opacity: 0; transition: transform .35s cubic-bezier(.2, .7, .2, 1), opacity .25s ease; }
+  .sheet.is-open .form { transform: none; opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) { .sheet, .sheet-bg, .sheet .form, .fab { transition: none; } }
+
+/* pływający przycisk wyceny na komputerze (na telefonie jest dock) */
+.fab { display: none; }
+@media (min-width: 47.51em) {
+  .fab {
+    display: inline-flex; align-items: center; gap: 0.625rem; position: fixed; z-index: 55; right: max(1.5rem, env(safe-area-inset-right, 0px)); bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px));
+    min-height: 3rem; padding: 0 1.375rem 0 1.125rem; border-radius: var(--r-pill); background: var(--night-2); color: var(--night-ink); border: 1px solid var(--night-line);
+    font: 600 var(--fs-1)/1 var(--font-body); text-decoration: none; box-shadow: 0 1rem 2rem -1rem rgba(4, 11, 22, .6);
+    visibility: hidden; transform: translateY(160%); transition: transform .3s cubic-bezier(.2, .7, .2, 1), visibility 0s linear .3s, border-color .2s;
+  }
+  .fab.is-up { visibility: visible; transform: none; transition-delay: 0s; }
+  .fab svg { color: var(--brand-cyan); flex: none; }
+  .fab:focus-visible { outline: 2px solid var(--brand-cyan); outline-offset: 3px; }
+}
+@media (min-width: 47.51em) and (hover: hover) { .fab:hover { border-color: var(--night-ink); } }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
