@@ -1,4 +1,4 @@
-# Qmala — DESIGN.md (źródło prawdy UI), wersja 13
+# Qmala — DESIGN.md (źródło prawdy UI), wersja 14
 
 Jedyny obowiązujący opis stylu strony qmala.pl. Kod (`src/assets/style.css`, blok `:root`) musi się z nim zgadzać.
 Kolejność ważności: słowa właściciela → ten plik → gust wykonawcy. Zmiana tokenu = zmiana tu i w `:root` jednocześnie.
@@ -90,7 +90,7 @@ Zasady:
 - **Dock (telefon)**: po przewinięciu 520 px pasek u dołu: „Zadzwoń” i „Wycena”.
 - **Panel wyceny**: wszystkie linki `data-sheet` („Wycena” w docku, pływający `.fab`, „Poproś o wycenę” w hero i w kaflu Oferty) otwierają ten sam formularz `#wycena` jako panel: na telefonie (≤ 47.5em) wysuwany od dołu, na komputerze okno na środku. JS przenosi istniejący formularz do `#sheet` (jeden komplet pól, ta sama nazwa Netlify Forms), blokuje resztę strony (`inert`, brak przewijania tła), Esc, krzyżyk i tło zamykają, fokus wraca na przycisk. Bez JS działa zwykła kotwica `#wycena`.
 - **Pływający przycisk wyceny (komputer, ≥ 47.51em)**: `.fab` w prawym dolnym rogu, tylko „Poproś o wycenę” (bez dzwonienia, telefon jest w nawigacji). Pojawia się po przewinięciu 520 px i chowa się, gdy w widoku jest sekcja Kontakt z formularzem. Ciemna pigułka, nie kolor akcji, żeby w widoku był jeden CTA w kolorze akcji (Zadzwoń w nawigacji). Na podstronach prowadzi do `index.html#wycena`.
-- **Hero (telefon)**: zdjęcie nie jest kafelkiem, tylko tłem pod nagłówkiem: nakładka w kolorze `--bg` 86–100%, maska wygaszająca ku dołowi, kontrast tekstu ≥ 4,5:1 w obu motywach. Od 48em zdjęcie jest kafelkiem jak wcześniej.
+- **Hero (telefon)**: zdjęcie nie jest kafelkiem, tylko tłem pod nagłówkiem: nakładka w kolorze `--bg` 66–100%, maska wygaszająca ku dołowi, akapit lede w ciemniejszym tonie, kontrast tekstu ≥ 4,5:1 w obu motywach (zmierzone min. 6,9:1). Od 48em zdjęcie jest kafelkiem jak wcześniej.
 
 ## 5a. Podstrony
 | Adres | Zawartość |

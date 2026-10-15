@@ -29,8 +29,10 @@
     border-radius: 0; box-shadow: none; background: transparent;
     -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 52%, transparent 100%); mask-image: linear-gradient(to bottom, #000 0, #000 52%, transparent 100%);
   }
+  .hero-actions .btn-ghost { background: color-mix(in srgb, var(--bg) 72%, transparent); }
+  .hero-copy .lede { color: color-mix(in srgb, var(--ink) 74%, var(--ink-2)); }
   .hero-photo img { object-position: 68% 22%; filter: saturate(.55) contrast(.95); }
-  .hero-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, color-mix(in srgb, var(--bg) 86%, transparent) 0, color-mix(in srgb, var(--bg) 92%, transparent) 60%, var(--bg) 100%); }
+  .hero-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, color-mix(in srgb, var(--bg) 66%, transparent) 0, color-mix(in srgb, var(--bg) 74%, transparent) 60%, var(--bg) 100%); }
 }
 
 /* kafle ze zdjęciem */
