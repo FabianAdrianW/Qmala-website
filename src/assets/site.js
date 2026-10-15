@@ -102,9 +102,24 @@
     var body = form.querySelector('.form-body'), done = document.getElementById('f-done'), err = document.getElementById('f-err'),
         send = document.getElementById('f-send'), email = document.getElementById('f-email'), tel = document.getElementById('f-tel'),
         temat = document.getElementById('f-temat'), opis = document.getElementById('f-opis');
-    // Na stronie w sieci (qmala.pl, podgląd Netlify, każdy adres http/https) formularz idzie na ten sam adres.
-    // Z pliku lokalnego i z localhost idzie na qmala.pl (odpowiedź jest wtedy nieprzejrzysta, więc o sukcesie decyduje samo dotarcie żądania).
-    var here = /^https?:$/.test(location.protocol) && !/^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+    // Wysyłka zwykłym POST-em do qmala.pl przez ukryty iframe: bez fetch i bez CORS, więc działa z podglądu i z pliku.
+    // Odpowiedź serwera jest nieczytelna z przeglądarki, więc „wysłane” = strona się wczytała; brak odpowiedzi po 20 s = błąd.
+    var sink = document.createElement('iframe');
+    sink.name = 'wycena-sink'; sink.title = 'Wysyłka formularza'; sink.hidden = true; document.body.appendChild(sink);
+    var origAction = form.getAttribute('action'), origTarget = form.getAttribute('target');
+    function sendForm(resolve, reject) {
+      var t = 0, finished = false;
+      function finish(ok) {
+        if (finished) return; finished = true; clearTimeout(t); sink.onload = null;
+        if (origAction === null) form.removeAttribute('action'); else form.setAttribute('action', origAction);
+        if (origTarget === null) form.removeAttribute('target'); else form.setAttribute('target', origTarget);
+        ok ? resolve() : reject(new Error('timeout'));
+      }
+      sink.onload = function () { finish(true); };
+      t = setTimeout(function () { finish(false); }, 20000);
+      form.setAttribute('action', 'https://qmala.pl/'); form.setAttribute('target', 'wycena-sink');
+      form.submit();
+    }
     function showErr(text, field, link) {
       err.textContent = text;
       if (link) { err.appendChild(document.createTextNode(' ')); var a = document.createElement('a'); a.href = link.href; a.textContent = link.text; err.appendChild(a); }
@@ -129,8 +144,7 @@
       if (em && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)) return showErr('Sprawdź adres e-mail. Powinien wyglądać tak: nazwa@domena.pl.', email);
       if (!em && ph.replace(/\D/g, '').length < 9) return showErr('Numer telefonu jest za krótki. Podaj co najmniej 9 cyfr.', tel);
       send.disabled = true; send.textContent = 'Wysyłam…';
-      var req = fetch(here ? '/' : 'https://qmala.pl/', { method: 'POST', mode: here ? 'same-origin' : 'no-cors', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(form)).toString() })
-        .then(function (r) { if (here && !r.ok) throw new Error('HTTP ' + r.status); });
+      var req = new Promise(function (resolve, reject) { sendForm(resolve, reject); });
       req.then(function () { showDone(em, ph); }, function () {
         var txt = ['Temat: ' + temat.value, 'Opis: ' + (opis.value.trim() || '-'), 'E-mail: ' + (em || '-'), 'Telefon: ' + (ph || '-')].join('\n');
         showErr('Nie udało się wysłać. Wpisane dane zostały w formularzu. Spróbuj jeszcze raz albo zadzwoń.', null,
