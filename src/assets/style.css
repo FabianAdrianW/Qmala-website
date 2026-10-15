@@ -144,8 +144,6 @@ h3 { font-size: var(--fs-3); line-height: 1.15; }
 .hero-copy { display: grid; gap: var(--s-3); min-width: 0; }
 .hero-copy .lede { font-size: clamp(1.15rem, 1.9vw, 1.35rem); line-height: 1.45; color: var(--ink-2); max-width: 30em; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: var(--s-1); }
-.hero-note { color: var(--ink-2); font-size: 1rem; }
-.hero-note a { color: var(--ink); font-weight: 600; text-underline-offset: 0.25rem; }
 .stack-scene { perspective: 93.75rem; min-width: 0; }
 .stack { --rx: 7deg; --ry: -16deg; position: relative; height: 31.875rem; transform-style: preserve-3d; transform: rotateX(var(--rx)) rotateY(var(--ry)); }
 .stack .tile { position: absolute; transition: none; box-shadow: 0 2.5rem 4.375rem -2.5rem var(--shadow); }
