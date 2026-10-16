@@ -33,18 +33,48 @@
           {%- endif %}
         </div>
         {%- endif %}
-        <div class="more"><a class="btn btn-ghost" href="mailto:{{ site.email_praca }}?subject={{ ('Aplikacja: ' + o.stanowisko) | urlencode }}">Aplikuj na to stanowisko</a></div>
+        <div class="more"><a class="btn btn-ghost" href="#cv" data-job="{{ o.stanowisko }}">Aplikuj na to stanowisko</a></div>
       </article>
       {%- else %}
       <article class="panel"><p class="lede">{{ praca.brak_ogloszen }}</p></article>
       {%- endfor %}
     </div>
-    <div class="cta-row">
-      <p>Wyślij CV na {{ site.email_praca }}{% if praca.klauzula %}<small>{{ praca.klauzula }}</small>{% endif %}</p>
-      <div>
-        <a class="btn btn-primary" href="mailto:{{ site.email_praca }}?subject={{ 'CV' | urlencode }}">Wyślij CV</a>
-        <button class="copy copy-day" type="button" data-copy="{{ site.email_praca }}">Kopiuj adres</button>
+    <form class="panel cv" id="cv" name="cv" method="POST" action="/" enctype="multipart/form-data" data-netlify="true" netlify-honeypot="bot-field" data-mail="{{ site.email_praca }}" aria-labelledby="cv-h" novalidate>
+      <input type="hidden" name="form-name" value="cv">
+      <input type="hidden" name="stanowisko" id="cv-job" value="">
+      <div class="cv-copy">
+        <h2 id="cv-h">Wrzuć tu swoje CV</h2>
+        <p>Wystarczy sam plik. Bez rejestracji i bez przepisywania danych, wszystko masz już w CV.</p>
+        <p class="cv-job" id="cv-job-note" hidden></p>
+        <div class="cv-alt">
+          <span>Wolisz mailem?</span>
+          <a href="mailto:{{ site.email_praca }}?subject={{ 'CV' | urlencode }}">{{ site.email_praca }}</a>
+          <button class="copy copy-day" type="button" data-copy="{{ site.email_praca }}">Kopiuj adres</button>
+        </div>
       </div>
-    </div>
+      <div class="cv-body">
+        <label class="drop" id="cv-drop" for="cv-file">
+          <input type="file" id="cv-file" name="cv" accept=".pdf,.doc,.docx,.odt" required>
+          <span class="drop-ico" aria-hidden="true">
+            <svg class="i-up" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5M5 20h14"/></svg>
+            <svg class="i-ok" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+          </span>
+          <span class="drop-t" id="cv-drop-t">Upuść CV tutaj albo <u>wybierz plik</u></span>
+          <span class="drop-s" id="cv-drop-s">PDF, DOC, DOCX lub ODT, do 5 MB</span>
+        </label>
+        <p class="cv-msg" id="cv-msg" role="alert" hidden></p>
+        <p class="bot" aria-hidden="true"><label>Nie wypełniaj tego pola: <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+        <div class="cv-send">
+          <button class="btn btn-primary" type="submit" id="cv-send">Wyślij CV</button>
+          {%- if praca.klauzula %}<small>{{ praca.klauzula }}</small>{% endif %}
+        </div>
+      </div>
+      <div class="cv-done" id="cv-done" tabindex="-1" hidden>
+        <span class="ico">{% include "ico-check.njk" %}</span>
+        <h2>CV wysłane</h2>
+        <p id="cv-done-p">Dziękujemy. Odezwiemy się, gdy pojawi się miejsce.</p>
+        <button class="btn btn-ghost" type="button" id="cv-again">Wyślij kolejny plik</button>
+      </div>
+    </form>
   </div>
 </section>
