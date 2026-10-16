@@ -179,3 +179,30 @@
   .home .float-b { animation: bob 8s ease-in-out -3s infinite alternate; }
   @keyframes bob { from { translate: 0 0; } to { translate: 0 -.625rem; } }
 }
+
+/* OPINIE: pas cytatów z listów referencyjnych. Płynie w drugą stronę niż pas nazw obiektów, zatrzymuje się pod kursorem i przyciskiem. */
+.qband { position: relative; overflow: hidden; padding-block: .5rem 1.25rem; -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent); }
+.qtrack { display: flex; width: max-content; }
+.qset { display: flex; flex: none; gap: 1.25rem; padding-right: 1.25rem; }
+.qcard { --action: var(--brand-cyan); position: relative; display: grid; align-content: space-between; gap: 1.75rem; width: min(27rem, 82vw); height: 100%; min-height: 13.5rem; margin: 0; padding: 1.75rem; border-radius: var(--r-tile); background: var(--night-2); border: 1px solid var(--night-line); color: var(--night-ink); }
+.qcard.is-light { --action: var(--brand-blue); background: var(--surface); border-color: var(--line); color: var(--ink); }
+.qcard blockquote { margin: 0; padding-left: 1.25rem; border-left: .25rem solid var(--action); font: var(--fw-display) clamp(1.3rem, 1.1rem + .8vw, 1.65rem)/1.28 var(--font-display); letter-spacing: var(--ls-display); font-variant-numeric: lining-nums proportional-nums; text-wrap: pretty; overflow-wrap: anywhere; }
+.qcard figcaption { display: grid; gap: .125rem; padding-left: 1.5rem; font-size: var(--fs-0); line-height: 1.4; color: var(--night-ink-2); }
+.qcard figcaption b { font-weight: 600; color: var(--night-ink); }
+.qcard.is-light figcaption { color: var(--ink-2); }
+.qcard.is-light figcaption b { color: var(--ink); }
+.qset > li { display: flex; }
+.qpause { min-height: 2.75rem; padding-inline: 1.125rem; }
+.qpause[hidden] { display: none; }
+.quotes .more { margin-top: 1.25rem; }
+@media (prefers-reduced-motion: no-preference) {
+  .qtrack { animation: qslide var(--dur, 84s) linear infinite reverse; }
+  .qband:hover .qtrack, .qband.is-paused .qtrack, .qband.is-off .qtrack { animation-play-state: paused; }
+}
+@keyframes qslide { to { transform: translateX(-50%); } }
+/* bez animacji: zwykły pas przewijany palcem, tylko jeden zestaw cytatów */
+@media (prefers-reduced-motion: reduce) {
+  .qband { overflow-x: auto; scroll-snap-type: x proximity; -webkit-mask-image: none; mask-image: none; padding-inline: var(--bleed); scroll-padding-inline: var(--bleed); scrollbar-width: thin; scrollbar-color: var(--line) transparent; }
+  .qset[aria-hidden="true"] { display: none; }
+  .qcard { scroll-snap-align: start; }
+}

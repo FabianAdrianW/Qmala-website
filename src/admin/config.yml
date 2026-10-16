@@ -62,7 +62,7 @@ collections:
               - { name: wymagania, label: Czego oczekujemy, label_singular: punkt, widget: list, required: false, field: { name: punkt, label: Punkt, widget: string } }
               - { name: oferujemy, label: Co oferujemy, label_singular: punkt, widget: list, required: false, field: { name: punkt, label: Punkt, widget: string } }
           - { name: brak_ogloszen, label: Tekst, gdy nie ma żadnego ogłoszenia, widget: text }
-          - { name: klauzula, label: Dopisek o zgodzie na przetwarzanie danych, widget: string, required: false }
+          - { name: klauzula, label: Zgoda na przetwarzanie danych (tekst pod przyciskiem „Wyślij CV”), widget: string, required: false }
 
   - name: dane
     label: Dane firmy

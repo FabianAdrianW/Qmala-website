@@ -169,6 +169,37 @@ description: Zakład Elektro-Instalacyjny Wojciech Kumala. Instalacje elektryczn
   </div>
 </section>
 
+{#- cytaty z listów referencyjnych: dane z _data/referencje.json (pole „cytat”). Dodasz cytat do listu → sam wskoczy do pasa. -#}
+{%- set cytaty = [] %}{% for l in referencje %}{% if l.cytat %}{% set _ = cytaty.push(l) %}{% endif %}{% endfor %}
+{%- if cytaty.length %}
+{%- set kopie = (6 / cytaty.length) | round(0, "ceil") %}
+<section class="sec quotes" id="opinie" aria-labelledby="q-h">
+  <div class="wrap">
+    <div class="sec-head sec-split">
+      <h2 id="q-h">Tak piszą o nas klienci</h2>
+      <div class="head-side">
+        <p>Fragmenty listów referencyjnych. Każdy list możesz przeczytać w całości.</p>
+        <button class="btn btn-ghost qpause" type="button" id="qpause" aria-controls="qband" aria-pressed="false" hidden>Zatrzymaj przewijanie</button>
+      </div>
+    </div>
+  </div>
+  <div class="qband" id="qband" role="region" aria-label="Cytaty z listów referencyjnych">
+    <div class="qtrack" style="--dur: {{ cytaty.length * kopie * 14 }}s">
+      {%- for i in range(0, kopie * 2) %}
+      <ul class="qset"{% if i > 0 %} aria-hidden="true"{% endif %}>
+        {%- for c in cytaty %}
+        <li><figure class="qcard{{ ' is-light' if loop.index0 % 2 == 1 }}"><blockquote>„{{ c.cytat }}”</blockquote><figcaption><b>{{ c.firma }}</b><span>List referencyjny, {{ c.rok }}</span></figcaption></figure></li>
+        {%- endfor %}
+      </ul>
+      {%- endfor %}
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="more"><a class="btn btn-ghost" href="referencje.html">Przeczytaj wszystkie referencje</a></div>
+  </div>
+</section>
+{%- endif %}
+
 <section class="sec night" id="kontakt">
   <div class="night-bg" aria-hidden="true"><img src="photos/budynek.jpg" alt="" width="1500" height="837" loading="lazy"></div>
   <div class="wrap contact-grid">

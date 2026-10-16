@@ -64,6 +64,16 @@
         sync();
       }
     }
+    var qb = document.getElementById('qband'), qp = document.getElementById('qpause');
+    if (qb && !calm) {
+      if (qp) {
+        qp.hidden = false;
+        qp.addEventListener('click', function () {
+          var on = qb.classList.toggle('is-paused'); qp.setAttribute('aria-pressed', String(on)); qp.textContent = on ? 'Wznów przewijanie' : 'Zatrzymaj przewijanie';
+        });
+      }
+      if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { qb.classList.toggle('is-off', !es[0].isIntersecting); }).observe(qb);
+    }
     if (calm) return;
     var imgs = [].slice.call(document.querySelectorAll('.home .photo > img, .home .firm-pic img'));
     var busy = false;
@@ -209,6 +219,77 @@
       tx = bx - ((e.clientY - r.top) / r.height - .5) * 10; ty = by + ((e.clientX - r.left) / r.width - .5) * 16; go();
     });
     hero.addEventListener('pointerleave', function () { tx = bx; ty = by; go(); });
+  })();
+
+  /* CV: wybierz albo upuść plik, wysyłka bez poczty (Netlify Forms, ten sam sposób co wycena) */
+  (function () {
+    var form = document.getElementById('cv'); if (!form) return;
+    var input = document.getElementById('cv-file'), drop = document.getElementById('cv-drop'), title = document.getElementById('cv-drop-t'), sub = document.getElementById('cv-drop-s'),
+        msg = document.getElementById('cv-msg'), send = document.getElementById('cv-send'), body = form.querySelector('.cv-body'), done = document.getElementById('cv-done'),
+        again = document.getElementById('cv-again'), job = document.getElementById('cv-job'), jobNote = document.getElementById('cv-job-note');
+    var MAX = 5 * 1024 * 1024, OK = /\.(pdf|docx?|odt)$/i, titleHtml = title.innerHTML, subText = sub.textContent;
+    function size(n) { return n < 1048576 ? Math.max(1, Math.round(n / 1024)) + ' KB' : (n / 1048576).toFixed(1).replace('.', ',') + ' MB'; }
+    function say(text, link) {
+      msg.textContent = text;
+      if (link) { msg.appendChild(document.createTextNode(' ')); var a = document.createElement('a'); a.href = link.href; a.textContent = link.text; msg.appendChild(a); }
+      msg.hidden = false;
+    }
+    function reset() { drop.classList.remove('has-file'); title.innerHTML = titleHtml; sub.textContent = subText; }
+    function check() {
+      msg.hidden = true; msg.textContent = '';
+      var f = input.files && input.files[0];
+      if (!f) { reset(); return false; }
+      if (!OK.test(f.name)) { input.value = ''; reset(); say('Ten format nie pasuje. Wyślij CV jako PDF, DOC, DOCX albo ODT.'); return false; }
+      if (f.size > MAX) { input.value = ''; reset(); say('Plik ma ' + size(f.size) + ', a limit to 5 MB. Wyślij lżejszą wersję albo napisz do nas mailem.'); return false; }
+      drop.classList.add('has-file'); title.textContent = f.name; sub.textContent = size(f.size) + ' · kliknij, żeby wybrać inny plik';
+      return true;
+    }
+    input.addEventListener('change', check);
+    ['dragenter', 'dragover'].forEach(function (t) { drop.addEventListener(t, function (e) { e.preventDefault(); drop.classList.add('is-over'); }); });
+    ['dragleave', 'dragend'].forEach(function (t) { drop.addEventListener(t, function () { drop.classList.remove('is-over'); }); });
+    drop.addEventListener('drop', function (e) {
+      e.preventDefault(); drop.classList.remove('is-over');
+      var f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0]; if (!f) return;
+      try { var dt = new DataTransfer(); dt.items.add(f); input.files = dt.files; check(); }
+      catch (err) { say('Ta przeglądarka nie przyjmuje upuszczonych plików. Kliknij w pole i wybierz plik.'); }
+    });
+    /* przycisk „Aplikuj na to stanowisko” przekazuje nazwę stanowiska razem z CV */
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[data-job]'); if (!a) return;
+      job.value = a.dataset.job; jobNote.textContent = 'Aplikujesz na stanowisko: ' + a.dataset.job; jobNote.hidden = false;
+    });
+    again.addEventListener('click', function () { form.reset(); reset(); done.hidden = true; body.hidden = false; input.focus(); });
+
+    /* wysyłka zwykłym POST-em przez ukryty iframe: bez fetch i CORS. Strona z internetu wysyła do siebie, podgląd lokalny do qmala.pl. */
+    var sink = document.createElement('iframe');
+    sink.name = 'cv-sink'; sink.title = 'Wysyłka CV'; sink.hidden = true; document.body.appendChild(sink);
+    var origAction = form.getAttribute('action'), origTarget = form.getAttribute('target');
+    var live = /^https?:$/.test(location.protocol) && !/^(localhost|127\.|\[::1\]|.*\.local$)/.test(location.hostname);
+    function post(resolve, reject) {
+      var t = 0, finished = false;
+      function finish(ok) {
+        if (finished) return; finished = true; clearTimeout(t); sink.onload = null;
+        form.setAttribute('action', origAction || '/'); if (origTarget === null) form.removeAttribute('target'); else form.setAttribute('target', origTarget);
+        ok ? resolve() : reject(new Error('timeout'));
+      }
+      sink.onload = function () { finish(true); };
+      t = setTimeout(function () { finish(false); }, 30000);
+      form.setAttribute('action', live ? '/' : 'https://qmala.pl/'); form.setAttribute('target', 'cv-sink');
+      form.submit();
+    }
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!input.files || !input.files[0]) { say('Najpierw wybierz plik z CV.'); input.click(); return; }
+      if (!check()) return;
+      var name = input.files[0].name;
+      send.disabled = true; send.textContent = 'Wysyłam…';
+      new Promise(post).then(function () {
+        document.getElementById('cv-done-p').textContent = 'Dostaliśmy plik „' + name + '”. Odezwiemy się, gdy pojawi się miejsce.';
+        body.hidden = true; done.hidden = false; done.focus();
+      }, function () {
+        say('Nie udało się wysłać. Plik został wybrany, spróbuj jeszcze raz albo wyślij go mailem na', { href: 'mailto:' + (form.dataset.mail || ''), text: (form.dataset.mail || '') + '.' });
+      }).then(function () { send.disabled = false; send.textContent = 'Wyślij CV'; });
+    });
   })();
 
   /* podgląd zdjęć: klik w miniaturę, strzałki, Esc */
